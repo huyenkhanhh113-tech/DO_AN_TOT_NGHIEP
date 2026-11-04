@@ -11,7 +11,7 @@ coverage/
 
 # --- Biến môi trường / thông tin nhạy cảm ---
 # KHÔNG đẩy .env lên GitHub: file chứa Gmail App Password và thông tin DB.
-# Xem CONFIG_TEMPLATE.md để biết cần tạo những biến nào.
+# Danh sách biến cần tạo: xem E:\DATN\tien_do_git\tai_lieu_tham_khao\CONFIG_TEMPLATE.md
 .env
 .env.*
 **/.env
