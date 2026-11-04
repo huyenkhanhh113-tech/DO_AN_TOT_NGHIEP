@@ -1,0 +1,42 @@
+# ============================================================
+# HealthyCare — .gitignore gốc (áp dụng cho toàn bộ repo)
+# Repo: https://github.com/huyenkhanhh113-tech/DO_AN_TOT_NGHIEP.git
+# ============================================================
+
+# --- Phụ thuộc & đầu ra build ---
+node_modules/
+build/
+dist/
+coverage/
+
+# --- Biến môi trường / thông tin nhạy cảm ---
+# KHÔNG đẩy .env lên GitHub: file chứa Gmail App Password và thông tin DB.
+# Xem CONFIG_TEMPLATE.md để biết cần tạo những biến nào.
+.env
+.env.*
+**/.env
+**/.env.*
+
+# --- Cấu hình DB thật (sẽ rà soát và đưa vào ở phần sau) ---
+/NodeJS/src/config/config.json
+
+# --- IDE / hệ điều hành ---
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.swp
+
+# --- Log & file tạm ---
+*.log
+_t/
+tmp/
+*.tmp
+
+# --- Bản sao lưu & ảnh trích xuất từ DB ---
+_backup_src/
+db/images-backup/
+
+# --- Script kiểm tra nội bộ (dự kiến đưa vào repo ở phần sau) ---
+/NodeJS/_*.js
+/Frontend-React.JS/_*.js
