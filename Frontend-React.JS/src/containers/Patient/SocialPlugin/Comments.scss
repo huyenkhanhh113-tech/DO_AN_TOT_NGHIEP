@@ -1,0 +1,28 @@
+// =============================================================
+// KHỐI BÌNH LUẬN FACEBOOK
+// =============================================================
+
+.comment-plugin {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--hc-border);
+
+    .fb-comments {
+        width: 100%;
+
+        span,
+        iframe {
+            width: 100% !important;
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 576px) {
+    .comment-plugin {
+        margin-top: 12px;
+        padding-top: 12px;
+    }
+}

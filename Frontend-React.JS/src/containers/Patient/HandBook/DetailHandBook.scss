@@ -1,0 +1,97 @@
+// =============================================================
+// CHI TIẾT CẨM NANG
+// =============================================================
+
+.detail-handbook-container {
+    background: #fff;
+    padding-bottom: 40px;
+
+    .desc-handbook {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 32px var(--hc-gutter) 10px;
+
+        .content-handbook {
+            .content-head {
+                .name-head {
+                    padding: 8px 0 24px;
+                    font-size: 28px !important;
+                    font-weight: 700 !important;
+                    text-align: center;
+                    color: var(--hc-text-dark);
+                    line-height: 1.35;
+                    letter-spacing: -0.4px;
+                }
+            }
+
+            // Ảnh minh họa trong nội dung cẩm nang
+            img {
+                max-width: 100%;
+                height: auto;
+                border-radius: var(--hc-radius);
+                margin: 10px 0;
+            }
+
+            p, li {
+                color: var(--hc-text-body);
+                line-height: 1.85;
+                font-size: 16px;
+            }
+        }
+
+        h1, h3 {
+            font-size: 20px !important;
+            font-weight: 700 !important;
+            color: var(--hc-text-dark);
+        }
+
+        h2 {
+            font-size: 18px !important;
+            font-weight: 600 !important;
+            color: var(--hc-text-dark);
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 1024px) {
+    .detail-handbook-container {
+        .desc-handbook {
+            padding: 26px var(--hc-gutter) 10px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .detail-handbook-container {
+        .desc-handbook {
+            .content-handbook .content-head .name-head {
+                font-size: 22px !important;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .detail-handbook-container {
+        .desc-handbook {
+            padding: 20px var(--hc-gutter) 8px;
+
+            .content-handbook {
+                .content-head .name-head {
+                    font-size: 19px !important;
+                }
+
+                p, li {
+                    font-size: 15px;
+                }
+            }
+
+            h1, h2, h3 {
+                font-size: 17px !important;
+            }
+        }
+    }
+}

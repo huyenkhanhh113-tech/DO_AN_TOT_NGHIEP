@@ -1,0 +1,29 @@
+@import "../styles/common.scss";
+
+// =============================================================
+// KHUNG ỨNG DỤNG (APP SHELL)
+// =============================================================
+
+.main-container {
+    background: var(--hc-bg);
+}
+
+.content-container {
+    background: var(--hc-bg);
+}
+
+// Vùng nội dung các trang quản trị (/system, /doctor)
+.system-container {
+    background: $hc-bg-soft;
+    min-height: calc(100vh - 56px);
+    padding: 24px;
+
+    .system-list {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    @include hc-below($hc-bp-tablet) {
+        padding: 14px;
+    }
+}

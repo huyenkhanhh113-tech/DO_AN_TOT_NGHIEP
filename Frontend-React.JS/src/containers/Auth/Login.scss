@@ -1,0 +1,207 @@
+// =============================================================
+// TRANG ĐĂNG NHẬP
+// =============================================================
+
+.login-background {
+    background: linear-gradient(135deg, #084f99 0%, #0b6bcb 45%, #00b8a9 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+
+    // Hai vòng tròn trang trí mờ tạo chiều sâu
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+    }
+
+    &::before {
+        width: 420px;
+        height: 420px;
+        top: -140px;
+        right: -100px;
+    }
+
+    &::after {
+        width: 300px;
+        height: 300px;
+        bottom: -120px;
+        left: -80px;
+    }
+
+    .login-container {
+        background-color: #fff;
+        width: 440px;
+        max-width: 100%;
+        border-radius: var(--hc-radius-lg);
+        box-shadow: 0 30px 60px rgba(8, 79, 153, 0.35);
+        position: relative;
+        z-index: 1;
+        padding: 8px;
+
+        .login-content {
+            padding: 32px 28px 26px;
+
+            .text-login {
+                font-weight: 700;
+                font-size: 26px;
+                text-align: center;
+                margin-bottom: 6px;
+                color: var(--hc-text-dark);
+                letter-spacing: -0.4px;
+            }
+
+            // Dòng phụ đề dưới tiêu đề Login
+            .text-login::after {
+                content: 'Đăng nhập vào hệ thống HealthyCare';
+                display: block;
+                font-size: 13px;
+                font-weight: 400;
+                color: var(--hc-text-muted);
+                margin-top: 6px;
+                letter-spacing: 0;
+            }
+
+            .login-input {
+                margin: 18px 0 10px;
+
+                label {
+                    font-size: 14px;
+                    font-weight: 600;
+                    color: var(--hc-text-dark);
+                    margin-bottom: 6px;
+                }
+
+                .form-control {
+                    height: 46px;
+                    border-radius: var(--hc-radius);
+                    border: 1.5px solid var(--hc-border);
+                    background: var(--hc-bg-soft);
+
+                    &:focus {
+                        background: #fff;
+                        border-color: var(--hc-primary-light);
+                        box-shadow: 0 0 0 4px rgba(13, 139, 242, 0.14);
+                    }
+                }
+
+                .custom-input-password {
+                    position: relative;
+
+                    i {
+                        position: absolute;
+                        right: 14px;
+                        top: 15px;
+                        cursor: pointer;
+                        color: var(--hc-text-muted);
+                        transition: var(--hc-transition-fast);
+
+                        &:hover {
+                            color: var(--hc-primary);
+                        }
+                    }
+                }
+            }
+
+            .btn-login {
+                width: 100%;
+                margin: 22px 0 14px;
+                height: 48px;
+                border-radius: var(--hc-radius-pill);
+                color: white;
+                outline: none;
+                border: none;
+                font-size: 15px;
+                font-weight: 700;
+                letter-spacing: 0.4px;
+                cursor: pointer;
+                background: var(--hc-gradient-primary);
+                box-shadow: 0 10px 24px rgba(11, 107, 203, 0.34);
+                transition: var(--hc-transition);
+
+                &:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 14px 30px rgba(11, 107, 203, 0.44);
+                }
+            }
+
+            .forgot-password {
+                font-size: 13px;
+                color: var(--hc-primary);
+                cursor: pointer;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            .text-other-login {
+                font-size: 13px;
+                color: var(--hc-text-muted);
+            }
+
+            .social-login {
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                gap: 14px;
+                margin-top: 14px;
+
+                .google,
+                .facebook {
+                    font-size: 20px;
+                    height: 46px;
+                    width: 46px;
+                    border-radius: 50%;
+                    color: white;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: var(--hc-transition);
+                }
+
+                .google {
+                    background: linear-gradient(135deg, #ea4335, #c32424);
+
+                    &:hover {
+                        transform: translateY(-3px);
+                        box-shadow: 0 10px 20px rgba(195, 36, 36, 0.4);
+                    }
+                }
+
+                .facebook {
+                    background: linear-gradient(135deg, #3b5998, #307aff);
+
+                    &:hover {
+                        transform: translateY(-3px);
+                        box-shadow: 0 10px 20px rgba(48, 122, 255, 0.4);
+                    }
+                }
+            }
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 576px) {
+    .login-background {
+        .login-container {
+            .login-content {
+                padding: 24px 18px 20px;
+
+                .text-login {
+                    font-size: 22px;
+                }
+            }
+        }
+    }
+}

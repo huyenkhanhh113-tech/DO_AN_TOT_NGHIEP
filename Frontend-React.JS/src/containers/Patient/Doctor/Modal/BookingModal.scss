@@ -1,0 +1,204 @@
+// =============================================================
+// MODAL ĐẶT LỊCH KHÁM
+// =============================================================
+
+.booking-modal-container {
+    .modal-content {
+        border: none;
+        border-radius: var(--hc-radius-lg);
+        overflow: hidden;
+        box-shadow: var(--hc-shadow-lg);
+    }
+
+    .booking-modal-content {
+        display: flex;
+        flex-direction: column;
+
+        .booking-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: var(--hc-gradient-primary);
+            color: #fff;
+
+            .left {
+                font-size: 17px;
+                font-weight: 700;
+            }
+
+            .right {
+                cursor: pointer;
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                transition: var(--hc-transition-fast);
+
+                &:hover {
+                    background: rgba(255, 255, 255, 0.2);
+                }
+            }
+        }
+
+        .booking-modal-body {
+            height: 100%;
+            padding: 20px;
+
+            .doctor-info {
+                padding-bottom: 16px;
+                margin-bottom: 16px;
+                border-bottom: 1px dashed var(--hc-border);
+            }
+
+            .form-group {
+                margin-bottom: 14px;
+
+                label {
+                    font-size: 13.5px;
+                    font-weight: 600;
+                    color: var(--hc-text-dark);
+                    margin-bottom: 6px;
+                }
+            }
+
+            // ---- Chọn kênh nhận xác nhận (Email / Zalo) ----
+            .confirm-channel-group {
+                .confirm-channel-options {
+                    display: flex;
+                    gap: 14px;
+                    flex-wrap: wrap;
+                    margin-top: 2px;
+                }
+
+                .channel-card {
+                    position: relative;
+                    flex: 1 1 220px;
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 14px 16px;
+                    border: 1.5px solid var(--hc-border);
+                    border-radius: var(--hc-radius);
+                    background: #fff;
+                    cursor: pointer;
+                    transition: var(--hc-transition);
+
+                    i {
+                        font-size: 20px;
+                        color: var(--hc-text-muted);
+                        transition: var(--hc-transition-fast);
+                    }
+
+                    .channel-text {
+                        display: flex;
+                        flex-direction: column;
+
+                        .channel-title {
+                            font-size: 14px;
+                            font-weight: 700;
+                            color: var(--hc-text-dark);
+                        }
+
+                        .channel-desc {
+                            font-size: 12px;
+                            color: var(--hc-text-muted);
+                            margin-top: 2px;
+                        }
+                    }
+
+                    .channel-check {
+                        position: absolute;
+                        top: 8px;
+                        right: 10px;
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 50%;
+                        background: transparent;
+                        color: transparent;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 11px;
+                        transition: var(--hc-transition-fast);
+                    }
+
+                    &:hover {
+                        border-color: var(--hc-primary-light);
+                        transform: translateY(-2px);
+                    }
+
+                    // Trạng thái đang chọn: có điểm nhấn
+                    &.active {
+                        border-color: var(--hc-primary);
+                        background: rgba(11, 107, 203, 0.06);
+                        box-shadow: 0 8px 18px rgba(11, 107, 203, 0.18);
+
+                        i {
+                            color: var(--hc-primary);
+                        }
+
+                        .channel-title {
+                            color: var(--hc-primary);
+                        }
+
+                        .channel-check {
+                            background: var(--hc-primary);
+                            color: #fff;
+                        }
+                    }
+                }
+            }
+        }
+
+        .booking-modal-footer {
+            border-top: 1px solid var(--hc-border);
+            padding: 14px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+
+            .btn-booking-confirm {
+                min-width: 120px;
+            }
+
+            .btn-booking-cancel {
+                min-width: 100px;
+            }
+        }
+    }
+}
+
+// Lớp phủ loading khi gửi yêu cầu đặt lịch
+div._loading_overlay_wrapper {
+    position: unset;
+
+    ._loading_overlay_overlay {
+        z-index: 80000000 !important;
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 576px) {
+    .booking-modal-container {
+        .booking-modal-content {
+            .booking-modal-body {
+                padding: 14px;
+            }
+
+            .booking-modal-footer {
+                padding: 12px 14px;
+
+                .btn-booking-confirm,
+                .btn-booking-cancel {
+                    flex: 1;
+                    min-width: 0;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,53 @@
+// =============================================================
+// TRANG XÁC NHẬN LỊCH HẸN QUA EMAIL
+// =============================================================
+
+.verify-container {
+    min-height: calc(100vh - 76px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: linear-gradient(180deg, #f4f8fd 0%, #ffffff 100%);
+
+    .verify-img-success,
+    .verify-img-err {
+        width: 100%;
+        max-width: 520px;
+        height: 380px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        border-radius: var(--hc-radius-lg);
+        animation: hcFadeUp 0.5s ease both;
+    }
+
+    .verify-img-success {
+        background-image: url('../../assets/verify-success.png');
+    }
+
+    .verify-img-err {
+        background-image: url('../../assets/verify-error.png');
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 768px) {
+    .verify-container {
+        .verify-img-success,
+        .verify-img-err {
+            height: 280px;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .verify-container {
+        .verify-img-success,
+        .verify-img-err {
+            height: 220px;
+        }
+    }
+}

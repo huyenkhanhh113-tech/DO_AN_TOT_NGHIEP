@@ -1,0 +1,34 @@
+.section-customize {
+    cursor: pointer;
+
+    .name-medical {
+        padding: 12px 4px 4px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--hc-text-dark);
+        text-align: center;
+        transition: var(--hc-transition-fast);
+
+        // Giới hạn tiêu đề 2 dòng, tràn thì hiện dấu ...
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        min-height: 44px;
+    }
+
+    &:hover {
+        .name-medical {
+            color: var(--hc-primary);
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .section-customize {
+        .name-medical {
+            font-size: 14px;
+            min-height: 40px;
+        }
+    }
+}

@@ -1,0 +1,161 @@
+// =============================================================
+// CHI TIẾT CƠ SỞ Y TẾ (PHÒNG KHÁM)
+// =============================================================
+
+.detail-clinic-container {
+    background: #fff;
+    padding-bottom: 40px;
+
+    .desc-clinic {
+        max-width: var(--hc-container);
+        margin: 0 auto;
+        padding: 32px var(--hc-gutter) 10px;
+        border-bottom: 1px solid var(--hc-border);
+
+        .content-clinic {
+            h1, h3 {
+                font-size: 20px !important;
+                font-weight: 700 !important;
+                color: var(--hc-text-dark);
+            }
+
+            h2 {
+                font-size: 18px !important;
+                font-weight: 600 !important;
+                color: var(--hc-text-dark);
+            }
+
+            p, li {
+                color: var(--hc-text-body);
+                line-height: 1.8;
+            }
+
+            img {
+                max-width: 100%;
+                height: auto;
+                border-radius: var(--hc-radius);
+            }
+
+            .content-head {
+                text-align: center;
+                padding: 10px 0 24px;
+
+                .name-head {
+                    font-size: 26px;
+                    font-weight: 700;
+                    color: var(--hc-text-dark);
+                    letter-spacing: -0.4px;
+                }
+
+                .address-head {
+                    font-size: 15px;
+                    color: var(--hc-text-muted);
+                    margin-top: 8px;
+
+                    i {
+                        color: var(--hc-teal);
+                    }
+                }
+            }
+        }
+    }
+
+    .detail-clinic-body {
+        max-width: var(--hc-container);
+        margin: 0 auto;
+        padding: 24px var(--hc-gutter);
+
+        .each-doctor {
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+            margin-bottom: 16px;
+            background-color: #fff;
+            border: 1px solid var(--hc-border);
+            border-radius: var(--hc-radius-lg);
+            box-shadow: var(--hc-shadow-sm);
+            transition: var(--hc-transition);
+
+            &:hover {
+                box-shadow: var(--hc-shadow);
+            }
+
+            .dt-content-left {
+                width: 48%;
+                padding-right: 20px;
+                border-right: 1px solid var(--hc-border);
+            }
+
+            .dt-content-right {
+                width: 52%;
+
+                .doctor-extra-info {
+                    border-top: 1px solid var(--hc-border);
+                    margin-top: 14px;
+                    padding-top: 14px;
+
+                    .doctor-extra-info-container {
+                        padding-left: 0 !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 1024px) {
+    .detail-clinic-container {
+        .desc-clinic {
+            padding: 26px var(--hc-gutter) 10px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .detail-clinic-container {
+        .desc-clinic .content-clinic .content-head .name-head {
+            font-size: 21px;
+        }
+
+        .detail-clinic-body {
+            .each-doctor {
+                flex-direction: column;
+                padding: 16px;
+
+                .dt-content-left {
+                    width: 100%;
+                    padding-right: 0;
+                    padding-bottom: 16px;
+                    border-right: none;
+                    border-bottom: 1px solid var(--hc-border);
+                }
+
+                .dt-content-right {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .detail-clinic-container {
+        .desc-clinic {
+            padding: 20px var(--hc-gutter) 8px;
+
+            .content-clinic {
+                h1, h2, h3 {
+                    font-size: 17px !important;
+                }
+
+                .content-head .name-head {
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}

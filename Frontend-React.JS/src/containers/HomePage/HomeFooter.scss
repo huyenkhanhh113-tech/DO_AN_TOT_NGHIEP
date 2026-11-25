@@ -1,0 +1,199 @@
+// =============================================================
+// CHÂN TRANG (FOOTER)
+// =============================================================
+
+.home-footer {
+  padding: 0;
+}
+
+.site-footer {
+  background: linear-gradient(160deg, #0a2540 0%, #084f99 100%);
+  padding: 56px 0 22px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.72);
+
+  .container {
+    max-width: var(--hc-container);
+  }
+
+  hr {
+    border-top-color: rgba(255, 255, 255, 0.14);
+    opacity: 1;
+    margin: 34px 0 18px;
+  }
+
+  a {
+    color: rgba(255, 255, 255, 0.72);
+    transition: var(--hc-transition-fast);
+
+    &:hover {
+      color: #fff;
+      text-decoration: none;
+    }
+  }
+}
+
+.footer-col {
+  margin-bottom: 24px;
+}
+
+.footer-brand {
+  .footer-logo {
+    width: 168px;
+    height: 46px;
+    margin-bottom: 14px;
+    background: url('../../assets/logo-2.png') left center no-repeat;
+    background-size: contain;
+    filter: brightness(0) invert(1);
+  }
+
+  .footer-desc {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 13.5px;
+    line-height: 1.75;
+    margin: 0;
+    max-width: 320px;
+  }
+}
+
+.footer-heading {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+  position: relative;
+  padding-bottom: 10px;
+
+  // Gạch chân nhấn màu teal dưới tiêu đề cột
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 32px;
+    height: 3px;
+    border-radius: var(--hc-radius-pill);
+    background: var(--hc-gradient-cta);
+  }
+}
+
+.footer-links {
+  padding-left: 0;
+  list-style: none;
+  margin: 0;
+
+  li {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 13.5px;
+    transition: var(--hc-transition-fast);
+
+    &:hover {
+      transform: translateX(4px);
+    }
+  }
+}
+
+.footer-contact {
+  padding-left: 0;
+  list-style: none;
+  margin: 0 0 18px;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13.5px;
+    color: rgba(255, 255, 255, 0.72);
+
+    i {
+      color: var(--hc-cyan);
+      margin-top: 5px;
+      width: 16px;
+      text-align: center;
+    }
+  }
+}
+
+.social-icons {
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+
+  li {
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 15px;
+    transition: var(--hc-transition);
+  }
+
+  a:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--hc-shadow);
+  }
+
+  a.facebook:hover { background-color: #3b5998; }
+  a.twitter:hover { background-color: #00aced; }
+  a.youtube:hover { background-color: #e5484d; }
+  a.linkedin:hover { background-color: #007bb6; }
+}
+
+.footer-bottom {
+  text-align: center;
+}
+
+.copyright-text {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 1024px) {
+  .site-footer {
+    padding: 44px 0 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    padding: 36px 0 16px;
+    text-align: left;
+  }
+
+  .footer-brand .footer-desc {
+    max-width: 100%;
+  }
+
+  .footer-heading {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 576px) {
+  .site-footer {
+    font-size: 13px;
+  }
+
+  .social-icons a {
+    width: 36px;
+    height: 36px;
+  }
+}

@@ -1,0 +1,167 @@
+.doctor-search-specialty-container {
+    padding: 36px 0 60px;
+    background: linear-gradient(180deg, #f4f8fd 0%, #ffffff 100%);
+    min-height: calc(100vh - 76px);
+
+    .body-search-specialty {
+        width: 100%;
+        max-width: var(--hc-container);
+        margin: 0 auto;
+        padding: 0 var(--hc-gutter);
+
+        .content-search-specialty {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 0 0 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--hc-border);
+
+            > div:first-child {
+                font-size: 22px;
+                font-weight: 700;
+                color: var(--hc-text-dark);
+                letter-spacing: -0.3px;
+            }
+
+            .search {
+                display: flex;
+                align-items: center;
+                padding: 8px 8px 8px 20px;
+                border-radius: var(--hc-radius-pill);
+                background: #fff;
+                border: 1.5px solid var(--hc-border);
+                box-shadow: var(--hc-shadow-xs);
+                transition: var(--hc-transition);
+
+                &:focus-within {
+                    border-color: var(--hc-primary-light);
+                    box-shadow: 0 0 0 4px rgba(13, 139, 242, 0.14);
+                }
+
+                i {
+                    margin-right: 10px;
+                    color: var(--hc-primary);
+                }
+
+                input {
+                    height: 34px;
+                    width: 280px;
+                    background: transparent;
+                    border: none;
+                    outline: none;
+                    font-size: 14px;
+                    color: var(--hc-text-dark);
+
+                    &::placeholder {
+                        color: var(--hc-text-muted);
+                    }
+                }
+            }
+        }
+
+        .item-search-specialty {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 14px;
+            margin-bottom: 12px;
+            background: #fff;
+            border: 1px solid var(--hc-border);
+            border-radius: var(--hc-radius-lg);
+            box-shadow: var(--hc-shadow-xs);
+            transition: var(--hc-transition);
+
+            &:hover {
+                cursor: pointer;
+                transform: translateY(-3px);
+                box-shadow: var(--hc-shadow);
+                border-color: rgba(11, 107, 203, 0.28);
+            }
+
+            .left-search-specialty {
+                flex-shrink: 0;
+                width: 130px;
+                height: 96px;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-color: var(--hc-bg-muted);
+                border-radius: var(--hc-radius);
+            }
+
+            .right-search-specialty {
+                flex: 1;
+                font-size: 17px;
+                font-weight: 600;
+                color: var(--hc-text-dark);
+            }
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 1024px) {
+    .doctor-search-specialty-container {
+        padding: 28px 0 48px;
+    }
+}
+
+@media (max-width: 768px) {
+    .doctor-search-specialty-container {
+        .body-search-specialty {
+            .content-search-specialty {
+                flex-direction: column;
+                align-items: stretch;
+
+                .search {
+                    margin: 0;
+
+                    input {
+                        width: 100%;
+                    }
+                }
+            }
+
+            .item-search-specialty {
+                .left-search-specialty {
+                    width: 100px;
+                    height: 78px;
+                }
+
+                .right-search-specialty {
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .doctor-search-specialty-container {
+        .body-search-specialty {
+            .content-search-specialty {
+                > div:first-child {
+                    font-size: 18px;
+                }
+            }
+
+            .item-search-specialty {
+                gap: 12px;
+                padding: 10px;
+
+                .left-search-specialty {
+                    width: 80px;
+                    height: 64px;
+                }
+
+                .right-search-specialty {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
+}

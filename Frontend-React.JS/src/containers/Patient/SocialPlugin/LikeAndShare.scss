@@ -1,0 +1,27 @@
+// =============================================================
+// KHỐI LIKE & CHIA SẺ FACEBOOK
+// =============================================================
+
+.like-share-plugin {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+
+    .fb-like {
+        margin-right: 4px;
+    }
+
+    .fb-share-button {
+        vertical-align: top;
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 576px) {
+    .like-share-plugin {
+        gap: 8px;
+    }
+}

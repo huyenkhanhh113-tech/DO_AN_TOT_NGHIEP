@@ -1,0 +1,77 @@
+@import "../../styles/common.scss";
+
+// =============================================================
+// HEADER KHU QUẢN TRỊ (/system, /doctor)
+// =============================================================
+
+.header-container {
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(120deg, #0a2540 0%, #0b6bcb 100%);
+    color: $common-text-color;
+    height: 56px;
+    padding: 0 16px;
+    position: relative;
+    box-shadow: 0 4px 16px rgba(8, 79, 153, 0.28);
+
+    .header-tabs-container {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .languages {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        .welcome {
+            margin-right: 12px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.85);
+        }
+    }
+
+    .btn-logout {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $common-text-color;
+        height: 38px;
+        width: 38px;
+        padding: 0;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: $hc-transition;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.16);
+            transform: translateY(-2px);
+        }
+
+        i {
+            font-size: 16px;
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 768px) {
+    .header-container {
+        height: auto;
+        min-height: 56px;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 8px 12px;
+
+        .languages {
+            .welcome {
+                display: none;
+            }
+        }
+    }
+}

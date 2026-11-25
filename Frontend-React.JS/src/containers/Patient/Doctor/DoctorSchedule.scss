@@ -1,0 +1,128 @@
+// =============================================================
+// KHỐI LỊCH KHÁM CỦA BÁC SĨ
+// =============================================================
+
+.doctor-schedule-container {
+    height: 100%;
+
+    .all-schedule {
+        margin-bottom: 14px;
+
+        select {
+            width: 100%;
+            padding: 11px 14px;
+            color: var(--hc-primary);
+            font-weight: 600;
+            font-size: 15px;
+            background: var(--hc-primary-soft);
+            border: 1.5px solid transparent;
+            border-radius: var(--hc-radius);
+            outline: none;
+            cursor: pointer;
+            transition: var(--hc-transition);
+
+            &:hover {
+                border-color: rgba(11, 107, 203, 0.35);
+            }
+        }
+    }
+
+    .all-available-time {
+        .text-calendar {
+            display: flex;
+            align-items: center;
+            color: var(--hc-text-dark);
+            font-weight: 600;
+            margin: 12px 0 16px;
+
+            i {
+                color: var(--hc-primary);
+                margin-right: 8px;
+            }
+
+            span {
+                text-transform: uppercase;
+                font-size: 14px;
+                letter-spacing: 0.3px;
+            }
+        }
+
+        .time-content {
+            .time-content-btns {
+                display: flex;
+                gap: 12px;
+                flex-wrap: wrap;
+
+                button {
+                    padding: 11px 18px;
+                    border: 1.5px solid var(--hc-border);
+                    outline: none;
+                    background-color: #fff;
+                    min-width: 140px;
+                    border-radius: var(--hc-radius);
+                    font-weight: 600;
+                    font-size: 14px;
+                    color: var(--hc-text-dark);
+                    cursor: pointer;
+                    transition: var(--hc-transition);
+
+                    &:hover {
+                        background: var(--hc-gradient-primary);
+                        border-color: transparent;
+                        color: #fff;
+                        transform: translateY(-2px);
+                        box-shadow: 0 10px 20px rgba(11, 107, 203, 0.3);
+                    }
+                }
+
+                .btn-vi {
+                    min-width: 150px;
+                }
+
+                .btn-en {
+                    min-width: 165px;
+                }
+            }
+
+            .book-free {
+                margin-top: 18px;
+                color: var(--hc-text-muted);
+                font-size: 14px;
+
+                i {
+                    color: var(--hc-orange);
+                }
+            }
+
+            .no-schedule {
+                font-style: italic;
+                font-size: 14px;
+                color: var(--hc-text-muted);
+                padding: 8px 0;
+            }
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 576px) {
+    .doctor-schedule-container {
+        .all-available-time {
+            .time-content {
+                .time-content-btns {
+                    gap: 8px;
+
+                    button,
+                    .btn-vi,
+                    .btn-en {
+                        min-width: calc(50% - 4px);
+                        padding: 9px 12px;
+                        font-size: 13px;
+                    }
+                }
+            }
+        }
+    }
+}

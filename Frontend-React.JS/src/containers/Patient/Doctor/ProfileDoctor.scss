@@ -1,0 +1,92 @@
+// =============================================================
+// THẺ HỒ SƠ BÁC SĨ (dùng trong modal đặt lịch & trang chuyên khoa)
+// =============================================================
+
+.profile-doctor-container {
+    .intro-doctor {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        .content-left {
+            flex-shrink: 0;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: var(--hc-bg-muted);
+            border: 4px solid var(--hc-primary-soft);
+            box-shadow: var(--hc-shadow-xs);
+        }
+
+        .content-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            .up {
+                font-weight: 700;
+                font-size: 16px;
+                color: var(--hc-text-dark);
+            }
+
+            .down {
+                text-align: justify;
+                font-size: 14px;
+                color: var(--hc-text-body);
+                line-height: 1.7;
+                margin-top: 4px;
+            }
+        }
+    }
+
+    .text-info-center {
+        margin-top: 10px;
+
+        a {
+            font-weight: 600;
+            color: var(--hc-primary);
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .price {
+        margin-top: 12px;
+        padding: 10px 14px;
+        background: var(--hc-orange-soft);
+        border-radius: var(--hc-radius);
+        font-size: 14px;
+        color: var(--hc-text-body);
+
+        .currency {
+            color: var(--hc-orange-dark);
+            font-weight: 700;
+            margin-left: 6px;
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 576px) {
+    .profile-doctor-container {
+        .intro-doctor {
+            gap: 12px;
+
+            .content-left {
+                width: 72px;
+                height: 72px;
+            }
+
+            .content-right .up {
+                font-size: 15px;
+            }
+        }
+    }
+}

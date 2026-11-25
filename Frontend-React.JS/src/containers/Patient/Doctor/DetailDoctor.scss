@@ -1,0 +1,182 @@
+// =============================================================
+// TRANG CHI TIẾT BÁC SĨ
+// =============================================================
+
+.doctor-detail-container {
+    min-height: 500px;
+    background: #fff;
+    padding-bottom: 40px;
+
+    // --- Khối giới thiệu bác sĩ ---
+    .intro-doctor {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        max-width: var(--hc-container);
+        margin: 0 auto;
+        padding: 40px var(--hc-gutter) 30px;
+        border-bottom: 1px solid var(--hc-border);
+
+        .content-left {
+            flex-shrink: 0;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: var(--hc-bg-muted);
+            border: 5px solid var(--hc-primary-soft);
+            box-shadow: var(--hc-shadow);
+        }
+
+        .content-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            .up {
+                font-size: 26px;
+                font-weight: 700;
+                color: var(--hc-text-dark);
+                letter-spacing: -0.4px;
+                padding-top: 4px;
+            }
+
+            .down {
+                padding-top: 12px;
+                color: var(--hc-text-body);
+                font-size: 15px;
+                line-height: 1.75;
+
+                .like-share-plugin {
+                    margin: 12px 0 20px 0;
+                }
+            }
+        }
+    }
+
+    // --- Khối lịch khám + thông tin thêm (bố cục 2 cột) ---
+    .schedule-doctor {
+        display: flex;
+        gap: 24px;
+        max-width: var(--hc-container);
+        margin: 24px auto;
+        padding: 0 var(--hc-gutter);
+
+        .content-left {
+            width: 52%;
+            background: #fff;
+            border: 1px solid var(--hc-border);
+            border-radius: var(--hc-radius-lg);
+            box-shadow: var(--hc-shadow-sm);
+            padding: 20px;
+        }
+
+        .content-right {
+            width: 48%;
+            background: #fff;
+            border: 1px solid var(--hc-border);
+            border-radius: var(--hc-radius-lg);
+            box-shadow: var(--hc-shadow-sm);
+            padding: 20px;
+        }
+    }
+
+    // --- Nội dung mô tả chi tiết ---
+    .detail-info-doctor {
+        max-width: var(--hc-container);
+        margin: 0 auto;
+        padding: 28px var(--hc-gutter);
+        background: var(--hc-bg-soft);
+        border-radius: var(--hc-radius-lg);
+        color: var(--hc-text-body);
+        line-height: 1.8;
+
+        h2, h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--hc-text-dark);
+            margin: 18px 0 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--hc-radius);
+        }
+    }
+
+    // --- Khu bình luận + like/share ---
+    .comment-doctor {
+        max-width: var(--hc-container);
+        margin: 24px auto 0;
+        padding: 20px var(--hc-gutter) 0;
+        border-top: 1px solid var(--hc-border);
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 1024px) {
+    .doctor-detail-container {
+        .intro-doctor {
+            padding: 30px var(--hc-gutter) 24px;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .doctor-detail-container {
+        .intro-doctor {
+            flex-direction: column;
+            text-align: center;
+            gap: 18px;
+
+            .content-left {
+                width: 120px;
+                height: 120px;
+            }
+
+            .content-right {
+                .up {
+                    font-size: 22px;
+                }
+
+                .down {
+                    text-align: center;
+                }
+            }
+        }
+
+        .schedule-doctor {
+            flex-direction: column;
+            gap: 16px;
+
+            .content-left,
+            .content-right {
+                width: 100%;
+            }
+        }
+
+        .detail-info-doctor {
+            padding: 20px var(--hc-gutter);
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .doctor-detail-container {
+        .intro-doctor {
+            .content-left {
+                width: 100px;
+                height: 100px;
+            }
+
+            .content-right .up {
+                font-size: 19px;
+            }
+        }
+    }
+}

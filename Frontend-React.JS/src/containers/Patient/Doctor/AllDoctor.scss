@@ -1,0 +1,169 @@
+// =============================================================
+// DANH SÁCH BÁC SĨ
+// =============================================================
+
+.doctor-all-doctor-container {
+    padding: 36px 0 60px;
+    background: linear-gradient(180deg, #f4f8fd 0%, #ffffff 100%);
+    min-height: calc(100vh - 76px);
+
+    .body-all-doctor {
+        width: 100%;
+        max-width: var(--hc-container);
+        margin: 0 auto;
+        padding: 0 var(--hc-gutter);
+
+        .content-all-doctor {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--hc-text-dark);
+            padding: 0 0 18px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--hc-border);
+            position: relative;
+            letter-spacing: -0.3px;
+
+            // Vạch nhấn màu bên trái tiêu đề
+            &::before {
+                content: '';
+                display: inline-block;
+                width: 5px;
+                height: 20px;
+                border-radius: var(--hc-radius-pill);
+                background: linear-gradient(180deg, var(--hc-primary), var(--hc-teal));
+                margin-right: 12px;
+                vertical-align: -3px;
+            }
+        }
+
+        .item-all-doctor {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: #fff;
+            border: 1px solid var(--hc-border);
+            border-radius: var(--hc-radius-lg);
+            box-shadow: var(--hc-shadow-xs);
+            cursor: pointer;
+            transition: var(--hc-transition);
+
+            &:hover {
+                transform: translateY(-3px);
+                box-shadow: var(--hc-shadow);
+                border-color: rgba(11, 107, 203, 0.28);
+
+                .arrow-right {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            .left-all-doctor {
+                flex-shrink: 0;
+                width: 110px;
+                height: 110px;
+                border-radius: 50%;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-color: var(--hc-bg-muted);
+                border: 4px solid var(--hc-primary-soft);
+            }
+
+            .right-all-doctor {
+                flex: 1;
+
+                .doctor-name {
+                    font-size: 17px;
+                    font-weight: 700;
+                    color: var(--hc-text-dark);
+                }
+
+                .doctor-specialty {
+                    color: var(--hc-primary);
+                    font-weight: 600;
+                    font-size: 14px;
+                    margin-top: 4px;
+                }
+
+                .doctor-clinic {
+                    color: var(--hc-text-muted);
+                    font-size: 13.5px;
+                    margin-top: 2px;
+                }
+            }
+
+            .arrow-right {
+                color: var(--hc-primary);
+                opacity: 0;
+                transform: translateX(-6px);
+                transition: var(--hc-transition);
+            }
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 1024px) {
+    .doctor-all-doctor-container {
+        padding: 28px 0 48px;
+    }
+}
+
+@media (max-width: 768px) {
+    .doctor-all-doctor-container {
+        .body-all-doctor {
+            .item-all-doctor {
+                gap: 14px;
+                padding: 12px;
+
+                .left-all-doctor {
+                    width: 84px;
+                    height: 84px;
+                }
+
+                .right-all-doctor {
+                    .doctor-name {
+                        font-size: 15px;
+                    }
+                }
+
+                .arrow-right {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .doctor-all-doctor-container {
+        .body-all-doctor {
+            .content-all-doctor {
+                font-size: 18px;
+            }
+
+            .item-all-doctor {
+                .left-all-doctor {
+                    width: 68px;
+                    height: 68px;
+                }
+
+                .right-all-doctor {
+                    .doctor-name {
+                        font-size: 14px;
+                    }
+
+                    .doctor-specialty,
+                    .doctor-clinic {
+                        font-size: 12.5px;
+                    }
+                }
+            }
+        }
+    }
+}

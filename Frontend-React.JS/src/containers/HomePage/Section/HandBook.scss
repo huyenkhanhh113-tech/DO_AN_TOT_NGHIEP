@@ -1,0 +1,41 @@
+.handbook-child {
+    cursor: pointer;
+
+    .handbook-name {
+        padding: 12px 4px 4px;
+
+        p {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--hc-text-dark);
+            margin: 0;
+            transition: var(--hc-transition-fast);
+
+            // Giới hạn tiêu đề 2 dòng, tràn thì hiện dấu ...
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 44px;
+        }
+    }
+
+    .section-handbook {
+        border: 1px solid var(--hc-border);
+    }
+
+    &:hover {
+        .handbook-name p {
+            color: var(--hc-primary);
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .handbook-child {
+        .handbook-name p {
+            font-size: 14px;
+            min-height: 40px;
+        }
+    }
+}
