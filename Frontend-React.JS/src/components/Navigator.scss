@@ -1,0 +1,167 @@
+@import "../styles/common.scss";
+
+// =============================================================
+// THANH MENU ĐIỀU HƯỚNG KHU QUẢN TRỊ
+// =============================================================
+
+.navigator-menu {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+
+    &.list-unstyled,
+    .list-unstyled {
+        list-style-type: none;
+    }
+
+    .menu-group {
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 100%;
+
+        .menu-group-name {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            line-height: 56px;
+            padding: 0 18px;
+            font-size: 14px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.88);
+            cursor: pointer;
+            transition: $hc-transition-fast;
+            border-radius: $hc-radius-sm;
+
+            &:hover {
+                background-color: rgba(255, 255, 255, 0.14);
+                color: #fff;
+            }
+        }
+
+        .menu-list {
+            display: none;
+            position: absolute;
+            top: 56px;
+            left: 0;
+            min-width: 250px;
+            padding: 8px;
+            margin: 0;
+            list-style: none;
+            background-color: #fff;
+            border-radius: $hc-radius;
+            box-shadow: $hc-shadow-lg;
+            z-index: 300;
+
+            .menu {
+                width: 100%;
+                padding: 0;
+                border-radius: $hc-radius-sm;
+                transition: $hc-transition-fast;
+
+                &.active {
+                    background-color: $hc-primary-soft;
+
+                    a {
+                        color: $hc-primary;
+                        font-weight: 600;
+                    }
+                }
+
+                .menu-link {
+                    display: block;
+                    padding: 10px 14px;
+                    font-size: 14px;
+                    text-decoration: none;
+                    color: $hc-text-body;
+                    border-radius: $hc-radius-sm;
+
+                    &:hover {
+                        background-color: $hc-bg-soft;
+                        color: $hc-primary;
+                    }
+                }
+
+                .sub-menu-list {
+                    display: none;
+                    padding: 6px 0 6px 14px;
+                    margin: 0;
+                    list-style: none;
+
+                    .sub-menu {
+                        padding: 8px 12px;
+                        border-radius: $hc-radius-sm;
+                        white-space: nowrap;
+                        transition: $hc-transition-fast;
+
+                        &:hover {
+                            background-color: $hc-bg-soft;
+                        }
+
+                        .sub-menu-link {
+                            text-decoration: none;
+                            color: $hc-text-body;
+                            font-size: 13.5px;
+                        }
+
+                        a {
+                            display: block;
+                        }
+
+                        &.active a {
+                            font-weight: 600;
+                            color: $hc-primary;
+                        }
+                    }
+                }
+
+                &.active span {
+                    font-weight: 600;
+                    color: $hc-primary;
+                }
+
+                &:hover {
+                    .sub-menu-list {
+                        display: block;
+                    }
+                }
+
+                .icon-right {
+                    display: inline-block;
+                    margin-left: 8px;
+                    color: $hc-text-muted;
+                }
+            }
+        }
+
+        &:hover {
+            .menu-list {
+                display: block;
+                animation: hcFadeUp 0.2s ease both;
+            }
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 768px) {
+    .navigator-menu {
+        flex-wrap: wrap;
+
+        .menu-group {
+            .menu-group-name {
+                padding: 0 12px;
+                font-size: 13px;
+                line-height: 40px;
+            }
+
+            .menu-list {
+                top: 44px;
+                min-width: 200px;
+            }
+        }
+    }
+}

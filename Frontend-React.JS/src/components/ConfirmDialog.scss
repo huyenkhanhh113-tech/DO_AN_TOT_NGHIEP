@@ -1,0 +1,188 @@
+// =============================================================
+// HỘP THOẠI XÁC NHẬN DÙNG CHUNG (ConfirmDialog)
+// Dùng design token $hc-* từ src/styles/_variables.scss
+// =============================================================
+@import '../styles/variables';
+
+// Màu đỏ cảnh báo: ưu tiên token $hc-danger, chưa có nên khai báo cục bộ
+$hc-danger: #d01a1d;
+$hc-danger-dark: #b3161a;
+
+// --- Hiệu ứng xuất hiện nhẹ: fade + scale ---
+@keyframes hcConfirmFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes hcConfirmScaleIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.94);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.hc-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    // Overlay mờ để làm nổi bật hộp thoại
+    background: rgba(18, 38, 63, 0.55);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    animation: hcConfirmFadeIn 0.2s ease both;
+}
+
+.hc-confirm {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    background: $hc-bg;
+    border-radius: $hc-radius-lg;
+    box-shadow: $hc-shadow-lg;
+    padding: 26px 24px 22px;
+    text-align: center;
+    animation: hcConfirmScaleIn 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+    // Biểu tượng tròn phía trên tiêu đề
+    &__icon {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 14px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        i {
+            font-size: 24px;
+        }
+
+        &.is-danger {
+            background: rgba($hc-danger, 0.12);
+            color: $hc-danger;
+        }
+
+        &.is-primary {
+            background: $hc-primary-soft;
+            color: $hc-primary;
+        }
+    }
+
+    &__title {
+        margin: 0 0 8px;
+        font-size: 19px;
+        font-weight: 700;
+        color: $hc-text-dark;
+        letter-spacing: -0.2px;
+    }
+
+    &__message {
+        margin: 0 0 22px;
+        font-size: 14.5px;
+        line-height: 1.55;
+        color: $hc-text-body;
+        word-break: break-word;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    &__btn {
+        flex: 1;
+        min-width: 0;
+        padding: 11px 18px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        border-radius: $hc-radius-pill;
+        font-size: 14.5px;
+        font-weight: 700;
+        transition: $hc-transition;
+
+        // Nút huỷ: nền trung tính
+        &--cancel {
+            background: $hc-bg-muted;
+            color: $hc-text-body;
+
+            &:hover {
+                background: $hc-border;
+                color: $hc-text-dark;
+            }
+        }
+
+        // Nút xác nhận: đỏ cảnh báo hoặc xanh thương hiệu
+        &--confirm {
+            color: #fff;
+
+            &.is-danger {
+                background: $hc-danger;
+                box-shadow: 0 8px 18px rgba($hc-danger, 0.35);
+
+                &:hover {
+                    background: $hc-danger-dark;
+                    transform: translateY(-1px);
+                    box-shadow: 0 12px 24px rgba($hc-danger, 0.42);
+                }
+            }
+
+            &.is-primary {
+                background: $hc-gradient-primary;
+                box-shadow: 0 8px 18px rgba($hc-primary, 0.32);
+
+                &:hover {
+                    transform: translateY(-1px);
+                    box-shadow: $hc-shadow-hover;
+                }
+            }
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@include hc-below($hc-bp-mobile) {
+    .hc-confirm {
+        padding: 22px 18px 18px;
+
+        &__title {
+            font-size: 17px;
+        }
+
+        &__actions {
+            flex-direction: column-reverse;
+        }
+
+        &__btn {
+            width: 100%;
+        }
+    }
+}
+
+// Tôn trọng cài đặt giảm chuyển động của người dùng
+@media (prefers-reduced-motion: reduce) {
+    .hc-confirm-overlay,
+    .hc-confirm {
+        animation: none;
+    }
+}

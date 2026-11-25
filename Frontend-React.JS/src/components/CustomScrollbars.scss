@@ -1,0 +1,81 @@
+@import "../styles/common.scss";
+
+// =============================================================
+// THANH CUỘN TUỲ BIẾN
+// =============================================================
+
+.custom-scrollbar {
+  .thumb-horizontal {
+    background-color: rgba($hc-primary, 0.35);
+    border-radius: $hc-radius-pill;
+
+    &:hover {
+      background-color: rgba($hc-primary, 0.7);
+    }
+
+    &:active {
+      background-color: rgba($hc-primary, 0.9);
+    }
+  }
+
+  .thumb-vertical {
+    background-color: rgba($hc-primary, 0.35);
+    border-radius: $hc-radius-pill;
+
+    &:hover {
+      background-color: rgba($hc-primary, 0.7);
+    }
+
+    &:active {
+      background-color: rgba($hc-primary, 0.9);
+    }
+  }
+
+  &:hover {
+    > .track-horizontal,
+    > .track-vertical {
+      opacity: 1 !important;
+
+      > .thumb-horizontal,
+      > .thumb-vertical {
+        opacity: 1;
+      }
+    }
+  }
+
+  .track-horizontal {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 6px !important;
+
+    &:hover,
+    &:active {
+      height: 10px !important;
+    }
+  }
+
+  .track-vertical {
+    right: 0;
+    bottom: 0;
+    top: 0;
+    width: 6px !important;
+
+    &:hover,
+    &:active {
+      width: 10px !important;
+    }
+  }
+
+  .thumb-horizontal {
+    cursor: pointer;
+    background-clip: padding-box;
+    min-width: 0px;
+  }
+
+  .thumb-vertical {
+    cursor: pointer;
+    background-clip: padding-box;
+    min-height: 0px;
+  }
+}
