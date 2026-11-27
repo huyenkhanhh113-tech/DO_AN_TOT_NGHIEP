@@ -1,0 +1,89 @@
+// =============================================================
+// THÊM / SỬA THÔNG TIN BÁC SĨ (ADMIN)
+// =============================================================
+
+.manage-doctor-container {
+    background: #fff;
+    border-radius: var(--hc-radius-lg);
+    box-shadow: var(--hc-shadow-sm);
+    padding: 24px;
+
+    .manage-doctor-title {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: -0.3px;
+        margin: 0 0 20px;
+        color: var(--hc-primary);
+    }
+
+    .more-info {
+        display: flex;
+        gap: 20px;
+        padding-bottom: 18px;
+
+        .content-left {
+            width: 40%;
+        }
+
+        .content-right {
+            width: 60%;
+
+            textarea {
+                min-height: 96px;
+            }
+        }
+    }
+
+    .more-info-extra {
+        padding-bottom: 6px;
+    }
+
+    .manage-doctor-editor {
+        border-radius: var(--hc-radius);
+        overflow: hidden;
+        border: 1px solid var(--hc-border);
+    }
+
+    label {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--hc-text-dark);
+        margin-bottom: 6px;
+    }
+
+    .btn {
+        margin-top: 16px;
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 768px) {
+    .manage-doctor-container {
+        padding: 16px;
+
+        .manage-doctor-title {
+            font-size: 18px;
+        }
+
+        .more-info {
+            flex-direction: column;
+            gap: 14px;
+
+            .content-left,
+            .content-right {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .manage-doctor-container {
+        padding: 12px;
+        border-radius: var(--hc-radius);
+    }
+}

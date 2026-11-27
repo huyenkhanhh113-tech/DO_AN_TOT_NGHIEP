@@ -1,0 +1,118 @@
+// =============================================================
+// QUẢN LÝ NGƯỜI DÙNG (ADMIN)
+// =============================================================
+
+.user-redux-container {
+    background: #fff;
+    border-radius: var(--hc-radius-lg);
+    box-shadow: var(--hc-shadow-sm);
+    padding: 24px;
+
+    .title {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: -0.3px;
+        margin: 0 0 8px;
+        color: var(--hc-primary);
+    }
+
+    .user-redux-body {
+        .container {
+            padding: 0;
+        }
+
+        label {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--hc-text-dark);
+            margin-bottom: 6px;
+        }
+
+        .preview-img-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            gap: 16px;
+
+            .label-upload {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 10px 18px;
+                border-radius: var(--hc-radius-pill);
+                background: var(--hc-primary-soft);
+                color: var(--hc-primary);
+                font-weight: 600;
+                font-size: 13.5px;
+                cursor: pointer;
+                transition: var(--hc-transition);
+
+                i {
+                    margin-left: 2px;
+                }
+
+                &:hover {
+                    background: var(--hc-gradient-primary);
+                    color: #fff;
+                    transform: translateY(-2px);
+                    box-shadow: 0 10px 20px rgba(11, 107, 203, 0.3);
+                }
+            }
+
+            .preview-image {
+                height: 100px;
+                width: 100px;
+                border: 1px solid var(--hc-border);
+                border-radius: var(--hc-radius);
+                background: center center no-repeat;
+                background-size: cover;
+                background-color: var(--hc-bg-muted);
+                cursor: pointer;
+                box-shadow: var(--hc-shadow-xs);
+                transition: var(--hc-transition);
+
+                &:hover {
+                    transform: scale(1.04);
+                    box-shadow: var(--hc-shadow);
+                }
+            }
+        }
+
+        .btn {
+            margin-top: 4px;
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 768px) {
+    .user-redux-container {
+        padding: 16px;
+
+        .title {
+            font-size: 18px;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .user-redux-container {
+        padding: 12px;
+        border-radius: var(--hc-radius);
+
+        .user-redux-body {
+            .preview-img-container {
+                flex-wrap: wrap;
+
+                .preview-image {
+                    height: 84px;
+                    width: 84px;
+                }
+            }
+        }
+    }
+}

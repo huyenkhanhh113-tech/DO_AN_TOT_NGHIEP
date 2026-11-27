@@ -1,0 +1,93 @@
+@import "../../../styles/common.scss";
+
+// =============================================================
+// BẢNG DANH SÁCH NGƯỜI DÙNG
+// =============================================================
+
+#TableManageUser {
+  font-family: inherit;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--hc-border);
+  border-radius: var(--hc-radius);
+  overflow: hidden;
+
+  td, th {
+    border: none;
+    border-bottom: 1px solid var(--hc-border);
+    padding: 12px 14px;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  th {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    background: linear-gradient(120deg, #0a2540 0%, #0b6bcb 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 13.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f8fafd;
+  }
+
+  tr:hover {
+    background-color: var(--hc-primary-soft);
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.btn-edit {
+    width: 38px;
+    height: 34px;
+    border: none;
+    outline: none;
+    border-radius: var(--hc-radius-sm);
+    background: var(--hc-orange-soft);
+    color: var(--hc-orange-dark);
+    cursor: pointer;
+    transition: var(--hc-transition-fast);
+
+    &:hover {
+        background: var(--hc-gradient-cta) !important;
+        color: #fff !important;
+    }
+}
+
+.btn-delete {
+    width: 38px;
+    height: 34px;
+    border: none;
+    outline: none;
+    border-radius: var(--hc-radius-sm);
+    background: rgba(229, 72, 77, 0.12);
+    color: $common-red;
+    cursor: pointer;
+    margin-left: 6px;
+    transition: var(--hc-transition-fast);
+
+    &:hover {
+        background: $common-red !important;
+        color: #fff !important;
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 768px) {
+    #TableManageUser {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}

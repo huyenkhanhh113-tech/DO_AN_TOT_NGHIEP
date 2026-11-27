@@ -1,0 +1,162 @@
+@import "../../../styles/common.scss";
+
+// =============================================================
+// QUẢN LÝ BỆNH NHÂN KHÁM BỆNH (BÁC SĨ)
+// =============================================================
+
+.manage-patient-container {
+    background: #fff;
+    border-radius: var(--hc-radius-lg);
+    box-shadow: var(--hc-shadow-sm);
+    padding: 24px;
+
+    .m-p-title {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: -0.3px;
+        margin: 0 0 20px;
+        color: var(--hc-primary);
+    }
+
+    .manage-patient-body {
+        .select-cus {
+            select {
+                width: 100%;
+                height: 42px;
+                padding: 0 14px;
+                color: var(--hc-primary);
+                font-weight: 600;
+                background-color: var(--hc-primary-soft);
+                border: 1.5px solid transparent;
+                border-radius: var(--hc-radius);
+                outline: none;
+                cursor: pointer;
+                transition: var(--hc-transition);
+
+                &:hover {
+                    border-color: rgba(11, 107, 203, 0.35);
+                }
+            }
+        }
+
+        .table-manage-patient {
+            overflow-x: auto;
+
+            #customers {
+                font-family: inherit;
+                border-collapse: separate;
+                border-spacing: 0;
+                width: 100%;
+                background: #fff;
+                border: 1px solid var(--hc-border);
+                border-radius: var(--hc-radius);
+                overflow: hidden;
+
+                td, th {
+                    border: none;
+                    border-bottom: 1px solid var(--hc-border);
+                    padding: 12px 14px;
+                    font-size: 14px;
+                    text-align: left;
+                }
+
+                th {
+                    padding-top: 14px;
+                    padding-bottom: 14px;
+                    background: linear-gradient(120deg, #0a2540 0%, #0b6bcb 100%);
+                    color: #fff;
+                    font-weight: 600;
+                    font-size: 13.5px;
+                    text-transform: uppercase;
+                    letter-spacing: 0.3px;
+                }
+
+                tr:nth-child(even) {
+                    background-color: #f8fafd;
+                }
+
+                tr:hover {
+                    background-color: var(--hc-primary-soft);
+                }
+
+                tr:last-child td {
+                    border-bottom: none;
+                }
+            }
+
+            .btn {
+                padding: 6px 14px;
+                font-size: 13px;
+            }
+
+            .btn-edit {
+                border: none;
+                outline: none;
+                background: transparent;
+                color: var(--hc-orange-dark);
+
+                &:hover {
+                    background-color: transparent !important;
+                    color: var(--hc-orange-dark) !important;
+                }
+            }
+
+            .btn-delete {
+                border: none;
+                outline: none;
+                background: transparent;
+                color: $common-red;
+
+                &:hover {
+                    background-color: transparent !important;
+                    color: $common-red !important;
+                }
+            }
+
+            .row-text {
+                margin-left: 0;
+                font-weight: 600;
+                color: var(--hc-teal);
+            }
+        }
+    }
+}
+
+// Lớp phủ loading khi tải danh sách bệnh nhân
+div._loading_overlay_wrapper {
+    position: unset;
+
+    ._loading_overlay_overlay {
+        z-index: 80000000 !important;
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 768px) {
+    .manage-patient-container {
+        padding: 16px;
+
+        .m-p-title {
+            font-size: 18px;
+        }
+
+        .manage-patient-body {
+            .col-4,
+            .col-2 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .manage-patient-container {
+        padding: 12px;
+        border-radius: var(--hc-radius);
+    }
+}

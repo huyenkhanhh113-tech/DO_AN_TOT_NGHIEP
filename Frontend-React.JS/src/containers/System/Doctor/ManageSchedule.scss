@@ -1,0 +1,267 @@
+// =============================================================
+// QUẢN LÝ KẾ HOẠCH KHÁM BỆNH (BÁC SĨ)
+// =============================================================
+
+.manage-schedule-container {
+    background: #fff;
+    border-radius: var(--hc-radius-lg);
+    box-shadow: var(--hc-shadow-sm);
+    padding: 24px;
+
+    .m-s-title {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 22px;
+        letter-spacing: -0.3px;
+        margin: 0 0 20px;
+        color: var(--hc-primary);
+    }
+
+    label {
+        font-size: 13.5px;
+        font-weight: 600;
+        color: var(--hc-text-dark);
+        margin-bottom: 6px;
+    }
+
+    // ---------- Chú thích màu + bộ lọc ----------
+    .schedule-legend {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 8px;
+        padding: 10px 14px;
+        background: var(--hc-bg-soft, #f5f8fc);
+        border-radius: var(--hc-radius);
+        border: 1px solid var(--hc-border);
+
+        .legend-items {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+
+            .legend-item {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--hc-text-dark);
+
+                .dot {
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 5px;
+                    display: inline-block;
+
+                    &.dot-booked {
+                        background: var(--hc-teal, #00b8a9);
+                        box-shadow: 0 0 0 3px rgba(0, 184, 169, 0.2);
+                    }
+
+                    &.dot-free {
+                        background: #fff;
+                        border: 1.5px solid var(--hc-border);
+                    }
+
+                    &.dot-selected {
+                        background: var(--hc-gradient-primary);
+                        box-shadow: 0 0 0 3px rgba(11, 107, 203, 0.18);
+                    }
+                }
+            }
+        }
+
+        .btn-filter-booked {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 999px;
+            border: 1.5px solid var(--hc-border);
+            background: #fff;
+            color: var(--hc-text-dark);
+            transition: var(--hc-transition-fast);
+
+            &:hover {
+                border-color: var(--hc-primary-light);
+                color: var(--hc-primary);
+            }
+
+            &.active {
+                background: var(--hc-gradient-primary);
+                border-color: transparent;
+                color: #fff;
+                box-shadow: 0 6px 14px rgba(11, 107, 203, 0.28);
+            }
+        }
+    }
+
+    // ---------- Lưới khung giờ ----------
+    .pick-hour-container {
+        padding-top: 20px;
+        padding-bottom: 8px;
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+
+        .btn-schedule {
+            position: relative;
+            padding: 10px 18px;
+            min-width: 130px;
+            border: 1.5px solid var(--hc-border);
+            border-radius: var(--hc-radius);
+            background: #fff;                 // chưa chọn -> nền trắng
+            color: var(--hc-text-dark);
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--hc-transition);
+
+            &:hover {
+                border-color: var(--hc-primary-light);
+                color: var(--hc-primary);
+                transform: translateY(-2px);
+            }
+
+            // Khung giờ ĐÃ CÓ LỊCH -> nền xanh (điểm nhấn)
+            &.booked {
+                background: linear-gradient(135deg, #00c9b7 0%, #00b8a9 100%);
+                border-color: transparent;
+                color: #fff;
+                box-shadow: 0 8px 18px rgba(0, 184, 169, 0.32);
+
+                &:hover {
+                    color: #fff;
+                    transform: translateY(-2px);
+                    box-shadow: 0 10px 22px rgba(0, 184, 169, 0.4);
+                }
+
+                .booked-mark {
+                    position: absolute;
+                    top: -8px;
+                    right: -8px;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background: #fff;
+                    color: var(--hc-teal, #00b8a9);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 12px;
+                    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+                }
+            }
+
+            // Khung giờ đang được chọn để LƯU -> gradient xanh dương
+            &.selected {
+                background: var(--hc-gradient-primary);
+                border-color: transparent;
+                color: #fff;
+                box-shadow: 0 10px 20px rgba(11, 107, 203, 0.3);
+                outline: 2px dashed #fff;
+                outline-offset: -6px;
+
+                &:hover {
+                    color: #fff;
+                }
+            }
+        }
+
+        .empty-schedule-note {
+            width: 100%;
+            padding: 18px;
+            text-align: center;
+            color: var(--hc-text-muted, #7a8699);
+            font-size: 14px;
+            font-style: italic;
+            background: var(--hc-bg-soft, #f5f8fc);
+            border-radius: var(--hc-radius);
+            border: 1px dashed var(--hc-border);
+        }
+    }
+
+    // ---------- Dòng tóm tắt ----------
+    .schedule-summary {
+        margin-top: 4px;
+
+        .summary-text {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13.5px;
+            color: var(--hc-text-muted, #7a8699);
+
+            i {
+                color: var(--hc-teal, #00b8a9);
+            }
+
+            b {
+                color: var(--hc-text-dark);
+            }
+        }
+    }
+
+    // ---------- Nút hành động ----------
+    .action-buttons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+    }
+}
+
+// =============================================================
+// RESPONSIVE
+// =============================================================
+@media (max-width: 768px) {
+    .manage-schedule-container {
+        padding: 16px;
+
+        .m-s-title {
+            font-size: 18px;
+        }
+
+        .schedule-legend {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .pick-hour-container {
+            .btn-schedule {
+                min-width: calc(50% - 7px);
+                padding: 9px 12px;
+                font-size: 13px;
+            }
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .manage-schedule-container {
+        padding: 12px;
+        border-radius: var(--hc-radius);
+
+        .schedule-legend {
+            .legend-items {
+                gap: 12px;
+
+                .legend-item {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+}
