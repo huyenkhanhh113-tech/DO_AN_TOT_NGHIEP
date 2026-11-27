@@ -27,6 +27,7 @@ import specialtyController from "../controllers/specialtyController";
 import clinicController from "../controllers/clinicController"
 import handbookController from '../controllers/handbookController'
 import homepageController from '../controllers/homepageController'
+import aiChatController from '../controllers/aiChatController'
 
 let router = express.Router()
 
@@ -100,6 +101,12 @@ let initWebRoutes = (app) => {
     router.post('/api/create-service-item', homepageController.createServiceItem)
     router.put('/api/update-service-item', homepageController.updateServiceItem)
     router.delete('/api/delete-service-item', homepageController.deleteServiceItem)
+
+    // CHATBOX AI TƯ VẤN SỨC KHỎE
+    // Frontend gửi câu hỏi, backend gọi LLM bằng key trong .env.
+    router.post('/api/ai-chat', aiChatController.postAIChat)
+    // Kiểm tra cấu hình key/model (không trả key)
+    router.get('/api/ai-chat/status', aiChatController.getAIStatus)
 
     return app.use("/", router)
 }

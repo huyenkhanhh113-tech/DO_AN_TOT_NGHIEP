@@ -22,6 +22,7 @@ import AllSpecialty from './Patient/Specialty/AllSpecialty';
 import AllDoctor from './Patient/Doctor/AllDoctor';
 import AllHandbook from './Patient/HandBook/AllHandbook';
 import SearchSpecialty from './HomePage/SearchSpecialty/SearchSpecialty';
+import AIChatBox from '../components/AIChatBox/AIChatBox';
 
 class App extends Component {
 
@@ -72,6 +73,9 @@ class App extends Component {
                                 </Switch>
                             </CustomScrollbars>
                         </div>
+
+                        {/* Chatbox AI tư vấn sức khỏe — góc trái dưới, hiện trên mọi trang */}
+                        <AIChatBox />
 
                         <ToastContainer
                             position="top-right"
