@@ -112,7 +112,9 @@ class ManagePatient extends Component {
 
         let res = await sendRemedyService({
             email: dataChild.email,
-            imageBase64: dataChild.imgBase64,
+            // Gửi mảng ảnh (nhiều ảnh) + nội dung nhận xét/dặn dò của bác sĩ.
+            imageBase64Array: dataChild.imagesBase64,
+            doctorNote: dataChild.doctorNote,
             doctorId: dataModal.doctorId,
             patientId: dataModal.patientId,
             timeType: dataModal.timeType,

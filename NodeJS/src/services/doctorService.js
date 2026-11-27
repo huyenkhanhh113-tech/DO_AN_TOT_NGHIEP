@@ -641,8 +641,10 @@ let getListPatientForDoctorService = (doctorId, date, statusId) => {
  * - Trả về: `{ errCode, errMessage }`
  *     0 = OK; 1 = thiếu tham số; 2 = **không gửi được email** (kèm lý do cụ thể).
  *
- * Tham số bắt buộc: email, doctorId, patientId, timeType, imageBase64
- * (`imageBase64` là ảnh hoá đơn dạng data-URI do bác sĩ upload).
+ * Tham số bắt buộc: email, doctorId, patientId, timeType và ít nhất 1 ảnh.
+ * Ảnh nhận theo `imageBase64Array` (mảng data-URI, tối đa 8 ảnh) hoặc
+ * `imageBase64` (1 ảnh — giữ tương thích với client cũ).
+ * `doctorNote` (không bắt buộc): nhận xét/dặn dò của bác sĩ, được chèn vào email.
  *
  * Lưu ý: trạng thái được đổi sang S3 **trước** khi gửi mail. Nếu mail lỗi thì
  * lịch vẫn ở S3 — chỉ có email là không tới. Đây là chủ ý: bác sĩ đã khám xong
@@ -651,7 +653,16 @@ let getListPatientForDoctorService = (doctorId, date, statusId) => {
 let sendRemedyService = (data) => {
     return new Promise(async(resolve, reject) => {
         try {
-            if (!data.email || !data.doctorId || !data.patientId || !data.timeType || !data.imageBase64) {
+            // Chuẩn hoá danh sách ảnh: ưu tiên mảng, fallback về 1 ảnh cũ.
+            let images = Array.isArray(data.imageBase64Array)
+                ? data.imageBase64Array.filter((img) => typeof img === 'string' && img.trim())
+                : [];
+            if (!images.length && data.imageBase64) {
+                images = [data.imageBase64];
+            }
+            images = images.slice(0, 8);
+
+            if (!data.email || !data.doctorId || !data.patientId || !data.timeType || !images.length) {
                 resolve({
                     errCode: 1,
                     errMessage: 'Missing required parameters!'
@@ -672,9 +683,12 @@ let sendRemedyService = (data) => {
                     await appointment.save()
                 }
 
-                // Gửi email kèm ảnh hoá đơn/kết quả khám
+                // Gửi email kèm NHIỀU ảnh kết quả + nhận xét/dặn dò của bác sĩ
                 try {
-                    await emailService.sendAttachment(data)
+                    await emailService.sendAttachment({
+                        ...data,
+                        imageBase64Array: images
+                    })
                 } catch (mailError) {
                     console.log('>>> GUI MAIL KET QUA KHAM THAT BAI:', mailError.code || '', '-', mailError.message)
                     return resolve({

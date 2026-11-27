@@ -114,7 +114,19 @@ let getBodyHTMLEmail = (dataSend) => {
 };
 
 /**
- * Gửi mail KẾT QUẢ KHÁM kèm ảnh HOÁ ĐƠN đính kèm.
+ * Escape ký tự HTML để nội dung bác sĩ nhập không phá cấu trúc email.
+ */
+let escapeHtml = (text) => {
+  return String(text || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+};
+
+/**
+ * Gửi mail KẾT QUẢ KHÁM kèm NHIỀU ảnh HOÁ ĐƠN và nhận xét/dặn dò của bác sĩ.
  *
  * - Ai gọi: `doctorService.sendRemedyService()` khi bác sĩ bấm "Gửi" trong
  *   `RemedyModal` (luồng `POST /api/send-remedy`).
@@ -122,9 +134,10 @@ let getBodyHTMLEmail = (dataSend) => {
  * - Bảng: không truy cập DB.
  * - Trả về: Promise resolve object `info` của nodemailer; **reject** nếu gửi lỗi.
  *
- * Đầu vào: `{ email, patientName, patientId, imageBase64 }` — `imageBase64` là
- * ảnh hoá đơn dạng data-URI (`data:image/...;base64,...`), được cắt bỏ phần
- * tiền tố và gửi kèm dưới dạng file `.jpg`.
+ * Đầu vào: `{ email, patientName, patientId, imageBase64Array, doctorNote }`.
+ * - `imageBase64Array`: mảng data-URI (`data:image/...;base64,...`), tối đa 8 ảnh.
+ * - `imageBase64`: 1 ảnh — giữ tương thích client cũ.
+ * - `doctorNote`: nhận xét/dặn dò, được escape và chèn vào body email.
  * Tiêu đề mail: "Kết quả khám bệnh ✔".
  */
 let sendAttachment = async (dataSend) => {
@@ -132,22 +145,41 @@ let sendAttachment = async (dataSend) => {
     try {
       let transporter = createTransporter();
 
-      let contentImg = `${dataSend.imageBase64}`;
-      let fileName = `remedy-${dataSend.patientId}-${new Date().getTime()}`;
+      let images = Array.isArray(dataSend.imageBase64Array)
+        ? dataSend.imageBase64Array.filter((img) => typeof img === 'string' && img.includes('base64,'))
+        : [];
+      if (!images.length && dataSend.imageBase64) {
+        images = [dataSend.imageBase64];
+      }
+      images = images.slice(0, 8);
+
+      if (!images.length) {
+        throw new Error('Không có ảnh kết quả khám để đính kèm.');
+      }
+
+      const stamp = new Date().getTime();
+      const attachments = images.map((image, index) => {
+        // Lấy đuôi file theo MIME thật (png/jpg/webp...) thay vì luôn .jpg
+        const mimeMatch = /^data:(image\/[a-zA-Z0-9.+-]+);base64,/.exec(image);
+        const mime = mimeMatch ? mimeMatch[1].toLowerCase() : 'image/jpeg';
+        let ext = mime.split('/')[1] || 'jpg';
+        if (ext === 'jpeg') ext = 'jpg';
+        if (ext === 'svg+xml') ext = 'svg';
+
+        return {
+          filename: `remedy-${dataSend.patientId}-${stamp}-${index + 1}.${ext}`,
+          content: image.split('base64,')[1],
+          encoding: 'base64',
+        };
+      });
+
       let info = await transporter.sendMail({
         // Tên hiển thị + địa chỉ gửi đều lấy từ .env (EMAIL_APP / WEBSITE_NAME)
         from: `"${process.env.WEBSITE_NAME || 'HealthyCare'}" <${process.env.EMAIL_APP}>`,
         to: dataSend.email, // danh sách người nhận
         subject: "Kết quả khám bệnh ✔",
         html: getBodyHTMLEmailRemedy(dataSend),
-        attachments: [
-          {
-            // Chuỗi đã mã hoá base64 dùng làm file đính kèm
-            filename: `${fileName}.jpg`,
-            content: contentImg.split("base64,")[1],
-            encoding: "base64",
-          },
-        ],
+        attachments,
       });
       resolve(info);
     } catch (e) {
@@ -161,15 +193,26 @@ let sendAttachment = async (dataSend) => {
  *
  * - Ai gọi: `sendAttachment()` (trong cùng file).
  * - Bảng: không truy cập DB.
- * - Trả về: **chuỗi HTML** thông báo kết quả/hóa đơn nằm trong file đính kèm.
+ * - Trả về: **chuỗi HTML** thông báo kết quả/hóa đơn + nhận xét của bác sĩ.
  *
- * Đầu vào: `{ patientName }`.
+ * Đầu vào: `{ patientName, doctorNote }`.
  */
 let getBodyHTMLEmailRemedy = (dataSend) => {
+  const note = typeof dataSend.doctorNote === 'string' ? dataSend.doctorNote.trim().slice(0, 2000) : '';
+  const noteHtml = note
+    ? `
+            <div style="margin:18px 0;padding:14px 16px;border-left:4px solid #0b6bcb;background:#f4f8fd;border-radius:8px;">
+              <div style="font-weight:700;color:#12263f;margin-bottom:6px;">Nhận xét và dặn dò của bác sĩ:</div>
+              <div style="color:#425466;line-height:1.6;white-space:pre-line;">${escapeHtml(note)}</div>
+            </div>
+        `
+    : '';
+
   return `
-            <h3>Xin chào ${dataSend.patientName}!</h3>
+            <h3>Xin chào ${escapeHtml(dataSend.patientName)}!</h3>
             <p>Bạn nhận được email này vì đã đặt lịch khám bệnh online trên website Healthy Care thành công.</p>
-            <p>Thông tin khám bệnh/hóa đơn được gửi trong file đính kèm.</p>
+            <p>Thông tin khám bệnh/hóa đơn được gửi trong ${dataSend.imageBase64Array && dataSend.imageBase64Array.length > 1 ? 'các file' : 'file'} đính kèm.</p>
+            ${noteHtml}
             <div>Xin chân thành cảm ơn!</div>
         `;
 };
