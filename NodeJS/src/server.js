@@ -3,8 +3,9 @@
  *
  * Thứ tự khởi tạo:
  *   1. Tạo app Express.
- *   2. Middleware CORS: chỉ cho phép origin `URL_REACT` (mặc định
- *      http://localhost:3000) gọi API, cho phép GET/POST/PUT/PATCH/DELETE.
+ *   2. Middleware CORS: cho phép `URL_REACT` (mặc định http://localhost:3000)
+ *      và http://127.0.0.1:3000 gọi API; cho phép GET/POST/PUT/PATCH/DELETE,
+ *      trả lời preflight OPTIONS ngay.
  *   3. bodyParser JSON + urlencoded với **limit 50mb** — cần thiết vì ảnh
  *      được gửi dưới dạng base64 trong body.
  *   4. `viewEngine(app)`  — cấu hình EJS + thư mục tĩnh (src/config/viewEngine.js).
@@ -24,11 +25,25 @@ require('dotenv').config();
 
 let app = express();
 
+// Danh sách origin được phép: URL_REACT trong .env + 2 địa chỉ dev thường dùng.
+// Trước đây chỉ set đúng URL_REACT nên mở web bằng 127.0.0.1:3000 sẽ bị CORS
+// chặn toàn bộ API (trang xác nhận lịch kẹt ở "Loading data...").
+const allowedOrigins = [
+    process.env.URL_REACT,
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+].filter(Boolean);
+
 // Thêm header trước khi khai báo các route
 app.use(function (req, res, next) {
 
-    // Website mà bạn muốn cho phép kết nối
-    res.setHeader('Access-Control-Allow-Origin', process.env.URL_REACT);
+    // Chỉ trả về đúng origin đang gọi nếu nằm trong danh sách cho phép
+    const requestOrigin = req.headers.origin;
+    if (requestOrigin && allowedOrigins.includes(requestOrigin)) {
+        res.setHeader('Access-Control-Allow-Origin', requestOrigin);
+    } else {
+        res.setHeader('Access-Control-Allow-Origin', allowedOrigins[0]);
+    }
 
     // Các phương thức HTTP được phép
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -39,6 +54,11 @@ app.use(function (req, res, next) {
     // Đặt true nếu cần website gửi kèm cookie trong request
     // tới API (ví dụ khi dùng session)
     res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Trả lời luôn preflight OPTIONS, tránh request bị treo/404
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
 
     // Chuyển sang lớp middleware tiếp theo
     next();

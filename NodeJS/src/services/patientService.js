@@ -31,10 +31,14 @@ require('dotenv').config()
  *                   mới với `roleId = 'R3'`.
  * - Trả về: `{ errCode, errMessage, confirmChannel, zaloLink, confirmMessage,
  *             emailSent, emailError }`
- *     0 = đặt thành công; 1 = thiếu tham số; 2 = khung giờ đã đầy.
+ *     0 = đặt thành công; 1 = thiếu tham số; 2 = khung giờ đã đầy;
+ *     3 = email này đã có lịch trong ngày; 4 = khung giờ không tồn tại.
  *
  * Trạng thái sau khi đặt: `statusId = 'S1'` (chờ khách xác nhận qua link trong mail).
  * Lỗi gửi xác nhận KHÔNG làm hỏng việc đặt lịch — dữ liệu đã lưu DB trước đó.
+ * Nếu không tìm thấy khung giờ thì phải trả lỗi NGAY, không được tạo booking rồi
+ * mới văng exception ở bước tăng `currentNumber` (lỗi này từng tạo bản ghi "ma"
+ * khiến khách không đặt lại được lần sau).
  */
 let postBookAppointmentService = (data) => {
     return new Promise(async(resolve, reject) => {
@@ -60,7 +64,18 @@ let postBookAppointmentService = (data) => {
 
                 
 
-                if (scheduleBookingData && scheduleBookingData.currentNumber >= scheduleBookingData.maxNumber) {
+                // Khung giờ không tồn tại (bác sĩ chưa thêm lịch ngày đó, hoặc
+                // frontend gửi ngày/giờ cũ) -> trả lỗi NGAY, tuyệt đối không
+                // tạo booking/user rồi mới lỗi ở bước tăng currentNumber bên dưới.
+                if (!scheduleBookingData) {
+                    resolve({
+                        errCode: 4,
+                        errMessage: 'This time slot is not available!'
+                    })
+                    return;
+                }
+
+                if (scheduleBookingData.currentNumber >= scheduleBookingData.maxNumber) {
                     resolve({
                         errCode: 2,
                         errMessage: 'Full patient booking in this time!'
@@ -239,10 +254,10 @@ let sendConfirmation = async (channel, dataSend) => {
  * - Bảng: `bookings` (SELECT theo doctorId + token + `statusId = 'S1'`,
  *   sau đó UPDATE `statusId` thành `'S2'`).
  * - Trả về: `{ errCode, errMessage }`
- *     0 = "Update the status appointment succeed!"
+ *     0 = xác nhận thành công (kể cả trường hợp đã xác nhận trước đó — bấm lại
+ *         link vẫn hiện trang thành công, tránh khách tưởng lịch bị huỷ)
  *     1 = thiếu tham số
- *     2 = lịch không tồn tại **hoặc đã được kích hoạt trước đó**
- *         (chặn bấm link 2 lần).
+ *     2 = token không tồn tại / sai bác sĩ
  *
  * `raw: false` là bắt buộc — nếu `true` thì không gọi được `.save()`.
  */
@@ -255,14 +270,19 @@ let postVerifyBookAppointmentService = (data) => {
                     errMessage: 'Missing required parameters!'
                 })
             } else {
+                // Tìm theo token, KHÔNG lọc status: khách có thể bấm lại link
+                // sau khi lịch đã S2 (đã xác nhận) hoặc S3 (đã khám xong).
                 let appointment = await db.Booking.findOne({
-                    where: { doctorId: data.doctorId, token: data.token, statusId: 'S1' },
+                    where: { doctorId: data.doctorId, token: data.token },
                     raw: false // phải để false mới cập nhật được
                 })
 
                 if (appointment) {
-                    appointment.statusId = 'S2'
-                    await appointment.save()
+                    // Chỉ chuyển S1 -> S2; các trạng thái sau giữ nguyên.
+                    if (appointment.statusId === 'S1') {
+                        appointment.statusId = 'S2'
+                        await appointment.save()
+                    }
 
                     resolve({
                         errCode: 0,
@@ -271,7 +291,7 @@ let postVerifyBookAppointmentService = (data) => {
                 } else {
                     resolve({
                         errCode: 2,
-                        errMessage: 'Appointment has been activated or does not exist!'
+                        errMessage: 'Appointment does not exist!'
                     })
                 }
             }
