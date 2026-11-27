@@ -1,0 +1,150 @@
+// =============================================================
+// HEALTHYCARE - HỆ THỐNG THIẾT KẾ (DESIGN TOKENS)
+// Tập trung toàn bộ màu sắc, chữ, bo góc, đổ bóng, breakpoint.
+// =============================================================
+
+// --- Bảng màu thương hiệu (xanh y khoa + teal + cam CTA) ---
+$hc-primary: #0b6bcb;
+$hc-primary-light: #0d8bf2;
+$hc-primary-dark: #084f99;
+$hc-primary-soft: #e8f2fe;
+$hc-teal: #00b8a9;
+$hc-teal-soft: #e3faf7;
+$hc-cyan: #14c9d6;
+$hc-orange: #ff8a3d;
+$hc-orange-dark: #ff6b2c;
+$hc-orange-soft: #fff1e8;
+
+// --- Màu chữ / nền ---
+$hc-text-dark: #12263f;
+$hc-text-body: #425466;
+$hc-text-muted: #7a8ca3;
+$hc-bg: #ffffff;
+$hc-bg-soft: #f4f8fd;
+$hc-bg-muted: #eef4fb;
+$hc-border: #e6edf5;
+
+// --- Gradient dùng cho hero / CTA ---
+$hc-gradient-primary: linear-gradient(135deg, #0b6bcb 0%, #0d8bf2 100%);
+$hc-gradient-hero: linear-gradient(120deg, rgba(8, 79, 153, 0.94) 0%, rgba(11, 107, 203, 0.82) 48%, rgba(0, 184, 169, 0.72) 100%);
+$hc-gradient-cta: linear-gradient(135deg, #ff8a3d 0%, #ff6b2c 100%);
+$hc-gradient-soft: linear-gradient(180deg, #f4f8fd 0%, #ffffff 100%);
+
+// --- Typography ---
+$hc-font: "Be Vietnam Pro", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+$hc-fs-h1: 40px;
+$hc-fs-h2: 28px;
+$hc-fs-h3: 22px;
+$hc-fs-body: 16px;
+$hc-fs-sm: 14px;
+$hc-fs-xs: 13px;
+
+// --- Bo góc ---
+$hc-radius-sm: 8px;
+$hc-radius: 12px;
+$hc-radius-lg: 16px;
+$hc-radius-pill: 999px;
+
+// --- Đổ bóng mềm nhiều lớp ---
+$hc-shadow-xs: 0 1px 2px rgba(18, 38, 63, 0.06);
+$hc-shadow-sm: 0 2px 8px rgba(18, 38, 63, 0.08);
+$hc-shadow: 0 6px 20px rgba(18, 38, 63, 0.10);
+$hc-shadow-lg: 0 16px 40px rgba(11, 107, 203, 0.16);
+$hc-shadow-hover: 0 18px 38px rgba(11, 107, 203, 0.22);
+
+// --- Chuyển động ---
+$hc-transition: all 0.25s ease;
+$hc-transition-fast: all 0.18s ease;
+
+// --- Khoảng cách / layout ---
+$hc-container: 1200px;
+$hc-gutter: 24px;
+
+// --- Breakpoint responsive ---
+$hc-bp-mobile: 576px;
+$hc-bp-tablet: 768px;
+$hc-bp-desktop: 1024px;
+
+// =============================================================
+// BIẾN CŨ - GIỮ LẠI ĐỂ TƯƠNG THÍCH NGƯỢC
+// (các file SCSS cũ vẫn tham chiếu tên biến này)
+// =============================================================
+$base-size: 16px;
+$lh: 1.5;
+$fontmain: $hc-font;
+$colormain: $hc-primary;
+$colorsub: $hc-orange;
+$common-text-color: white;
+$common-btn-confirm: $hc-primary;
+$common-btn-deny: $hc-orange;
+$common-error: #ff7a45;
+$common-notify: $hc-teal;
+$common-green: #00c087;
+$common-red: #e5484d;
+$common-white: #fff;
+$common-orange: $hc-orange;
+$border: $hc-border;
+$text-in-light: $hc-text-dark;
+
+$input-focus: $hc-primary-light;
+
+$footer-container: $hc-bg-soft;
+$footer-text: $hc-text-body;
+$footer-next-disable: #cfd9e6;
+
+$bg-menu-color: #ffffff;
+$bg-scrollbar: $hc-primary;
+$bg-table-color: $hc-bg-soft;
+$box-shadow-color: rgba(18, 38, 63, 0.12);
+
+$dropdown-image: url("../assets/images/dropdown.svg");
+
+// Chọn ngày (date picker)
+$date-picker-bg: $common-white;
+$date-picker-border: #1f2229;
+$date-picker-arrow-hover: $hc-primary;
+$date-picker-month-fg: #12263f;
+$date-picker-month-bg: $common-white;
+$date-picker-weekdays-fg: #7a8ca3;
+$date-picker-weekdays-bg: transparent;
+$date-picker-day-fg: #12263f;
+$date-picker-day-hover-bg: #e0e0e0;
+$date-picker-today-border: $hc-primary;
+$date-picker-today-bg: $hc-primary;
+$date-picker-today-fg: #ffffff;
+$date-picker-day-selected-fg: $common-white;
+
+// =============================================================
+// MIXIN DÙNG CHUNG
+// =============================================================
+
+// Áp dụng khi màn hình nhỏ hơn hoặc bằng breakpoint truyền vào
+@mixin hc-below($bp) {
+    @media (max-width: $bp) {
+        @content;
+    }
+}
+
+// Áp dụng khi màn hình lớn hơn breakpoint truyền vào
+@mixin hc-above($bp) {
+    @media (min-width: $bp + 1) {
+        @content;
+    }
+}
+
+// Khung nội dung giới hạn bề rộng, canh giữa
+@mixin hc-container {
+    width: 100%;
+    max-width: $hc-container;
+    margin: 0 auto;
+    padding: 0 $hc-gutter;
+}
+
+// Card nền trắng bo góc + đổ bóng mềm
+@mixin hc-card {
+    background: $hc-bg;
+    border: 1px solid $hc-border;
+    border-radius: $hc-radius-lg;
+    box-shadow: $hc-shadow-sm;
+    transition: $hc-transition;
+}

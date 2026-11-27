@@ -1,0 +1,263 @@
+/*
+ * HEALTHYCARE - Style nền tảng toàn cục
+ * Nơi khai báo CSS custom properties (biến dùng chung), reset cơ bản,
+ * thang bậc typography, nút, hiệu ứng và skeleton loading.
+ */
+
+:root {
+    /* Bảng màu thương hiệu */
+    --hc-primary: #0b6bcb;
+    --hc-primary-light: #0d8bf2;
+    --hc-primary-dark: #084f99;
+    --hc-primary-soft: #e8f2fe;
+    --hc-teal: #00b8a9;
+    --hc-teal-soft: #e3faf7;
+    --hc-cyan: #14c9d6;
+    --hc-orange: #ff8a3d;
+    --hc-orange-dark: #ff6b2c;
+    --hc-orange-soft: #fff1e8;
+
+    /* Màu chữ / nền */
+    --hc-text-dark: #12263f;
+    --hc-text-body: #425466;
+    --hc-text-muted: #7a8ca3;
+    --hc-bg: #ffffff;
+    --hc-bg-soft: #f4f8fd;
+    --hc-bg-muted: #eef4fb;
+    --hc-border: #e6edf5;
+
+    /* Gradient */
+    --hc-gradient-primary: linear-gradient(135deg, #0b6bcb 0%, #0d8bf2 100%);
+    --hc-gradient-hero: linear-gradient(120deg, rgba(8, 79, 153, 0.94) 0%, rgba(11, 107, 203, 0.82) 48%, rgba(0, 184, 169, 0.72) 100%);
+    --hc-gradient-cta: linear-gradient(135deg, #ff8a3d 0%, #ff6b2c 100%);
+    --hc-gradient-soft: linear-gradient(180deg, #f4f8fd 0%, #ffffff 100%);
+
+    /* Bo góc */
+    --hc-radius-sm: 8px;
+    --hc-radius: 12px;
+    --hc-radius-lg: 16px;
+    --hc-radius-pill: 999px;
+
+    /* Đổ bóng */
+    --hc-shadow-xs: 0 1px 2px rgba(18, 38, 63, 0.06);
+    --hc-shadow-sm: 0 2px 8px rgba(18, 38, 63, 0.08);
+    --hc-shadow: 0 6px 20px rgba(18, 38, 63, 0.10);
+    --hc-shadow-lg: 0 16px 40px rgba(11, 107, 203, 0.16);
+    --hc-shadow-hover: 0 18px 38px rgba(11, 107, 203, 0.22);
+
+    /* Chuyển động */
+    --hc-transition: all 0.25s ease;
+    --hc-transition-fast: all 0.18s ease;
+
+    /* Layout */
+    --hc-container: 1200px;
+    --hc-gutter: 24px;
+
+    /* Font */
+    --hc-font: "Be Vietnam Pro", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+body, html {
+    background-color: var(--hc-bg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: $fontmain;
+    font-size: $hc-fs-body - 1px;
+    line-height: 1.6;
+    color: $hc-text-body;
+    height: 100vh;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: $hc-text-dark;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+a {
+    color: $hc-primary;
+    transition: $hc-transition-fast;
+
+    &:hover {
+        color: $hc-primary-light;
+        text-decoration: none;
+    }
+}
+
+/* Thanh cuộn mảnh, đồng bộ tông xanh */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba($hc-primary, 0.35);
+    border-radius: $hc-radius-pill;
+
+    &:hover {
+        background: rgba($hc-primary, 0.6);
+    }
+}
+
+/* Khung nội dung dùng chung cho các trang */
+.hc-container {
+    @include hc-container;
+}
+
+/* Tiêu đề khối nội dung */
+.hc-section-title {
+    font-size: $hc-fs-h2;
+    font-weight: 700;
+    color: $hc-text-dark;
+    letter-spacing: -0.4px;
+}
+
+/* Nút hành động chính theo tông xanh y khoa */
+.hc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: $hc-radius-pill;
+    padding: 11px 24px;
+    font-size: $hc-fs-sm;
+    font-weight: 600;
+    transition: $hc-transition;
+
+    &--primary {
+        background: $hc-gradient-primary;
+        color: #fff;
+        box-shadow: 0 8px 18px rgba(11, 107, 203, 0.28);
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(11, 107, 203, 0.38);
+        }
+    }
+
+    &--cta {
+        background: $hc-gradient-cta;
+        color: #fff;
+        box-shadow: 0 8px 18px rgba(255, 138, 61, 0.32);
+
+        &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px rgba(255, 138, 61, 0.42);
+        }
+    }
+
+    &--ghost {
+        background: transparent;
+        color: $hc-primary;
+        border: 1.5px solid $hc-primary;
+
+        &:hover {
+            background: $hc-primary;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+    }
+}
+
+/* Nhãn nhỏ (badge) */
+.hc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: $hc-radius-pill;
+    font-size: $hc-fs-xs;
+    font-weight: 600;
+    background: $hc-primary-soft;
+    color: $hc-primary;
+
+    &--teal {
+        background: $hc-teal-soft;
+        color: $hc-teal;
+    }
+
+    &--orange {
+        background: $hc-orange-soft;
+        color: $hc-orange-dark;
+    }
+}
+
+/* Hiệu ứng xuất hiện nhẹ khi vào trang */
+@keyframes hcFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hc-fade-up {
+    animation: hcFadeUp 0.5s ease both;
+}
+
+/* Skeleton loading: thay cho màn hình trắng khi đang tải dữ liệu */
+@keyframes hcShimmer {
+    0% {
+        background-position: -400px 0;
+    }
+    100% {
+        background-position: 400px 0;
+    }
+}
+
+.hc-skeleton {
+    background: #eef2f7;
+    background-image: linear-gradient(90deg, #eef2f7 0px, #f7fafc 120px, #eef2f7 240px);
+    background-size: 600px 100%;
+    animation: hcShimmer 1.4s infinite linear;
+    border-radius: $hc-radius;
+}
+
+.hc-skeleton-card {
+    border-radius: $hc-radius-lg;
+    overflow: hidden;
+    border: 1px solid $hc-border;
+    background: #fff;
+    padding: 14px;
+
+    .hc-skeleton {
+        margin-bottom: 12px;
+    }
+}
+
+/* Tiện ích chung */
+.hc-text-center {
+    text-align: center;
+}
+
+.hc-mt-0 { margin-top: 0; }
+.hc-mb-0 { margin-bottom: 0; }
+
+.content-container {
+    .title {
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: $base-size + 4px;
+        margin-top: 15px;
+        color: $colormain;
+    }
+    .content {
+        margin: 15px 30px;
+        box-shadow: 2px 2px 4px 0 $box-shadow-color;
+        -webkit-box-shadow: 2px 2px 4px 0 $box-shadow-color;
+    }
+}

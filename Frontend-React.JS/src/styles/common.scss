@@ -1,0 +1,72 @@
+@import "variables";
+
+// =============================================================
+// TIỆN ÍCH CHUNG
+// =============================================================
+
+.text-center {
+    text-align: center !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.text-red {
+    color: $common-red !important;
+}
+
+.text-primary-hc {
+    color: $hc-primary !important;
+}
+
+.text-teal-hc {
+    color: $hc-teal !important;
+}
+
+.text-orange-hc {
+    color: $hc-orange !important;
+}
+
+.text-muted-hc {
+    color: $hc-text-muted !important;
+}
+
+.bg-soft-hc {
+    background: $hc-bg-soft !important;
+}
+
+// Đường phân cách mảnh
+.hc-divider {
+    height: 1px;
+    width: 100%;
+    background: $hc-border;
+    border: none;
+    margin: 20px 0;
+}
+
+// Thẻ bao nội dung trắng bo góc
+.hc-panel {
+    @include hc-card;
+    padding: 20px;
+
+    @include hc-below($hc-bp-mobile) {
+        padding: 14px;
+    }
+}
+
+// Hàng/cột lưới card tự co giãn
+.hc-grid {
+    display: grid;
+    gap: $hc-gutter;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+
+    @include hc-below($hc-bp-mobile) {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 14px;
+    }
+}
