@@ -140,52 +140,57 @@ class BookingModal extends Component {
         this.setState({
             isShowLoading: true
         })
-            
-        let res = await postPatientBookingService({
-            fullName: this.state.fullName,
-            phoneNumber: this.state.phoneNumber,
-            email: this.state.email,
-            address: this.state.address,
-            reason: this.state.reason,
-            date: this.props.dataTime.date,
-            birthday: date,
-            selectedGender: this.state.selectedGender.value,
-            doctorId: this.state.doctorId,
-            timeType: this.state.timeType,
-            language: 'vi',
-            timeString: timeString,
-            doctorName: doctorName,
-            // Kênh xác nhận khách hàng chọn
-            confirmChannel: this.state.confirmChannel,
-            contactPhone: this.state.confirmChannel === 'zalo'
-                ? this.state.zaloPhone
-                : this.state.phoneNumber
-        })
-        if (res && res.errCode === 0) {
-            this.setState({
-                isShowLoading: false
+
+        try {
+            let res = await postPatientBookingService({
+                fullName: this.state.fullName,
+                phoneNumber: this.state.phoneNumber,
+                email: this.state.email,
+                address: this.state.address,
+                reason: this.state.reason,
+                date: this.props.dataTime.date,
+                birthday: date,
+                selectedGender: this.state.selectedGender.value,
+                doctorId: this.state.doctorId,
+                timeType: this.state.timeType,
+                language: 'vi',
+                timeString: timeString,
+                doctorName: doctorName,
+                // Kênh xác nhận khách hàng chọn
+                confirmChannel: this.state.confirmChannel,
+                contactPhone: this.state.confirmChannel === 'zalo'
+                    ? this.state.zaloPhone
+                    : this.state.phoneNumber
             })
 
-            // Nếu chọn Zalo, mở link Zalo để khách nhận tin xác nhận
-            if (res.confirmChannel === 'zalo' && res.zaloLink) {
-                window.open(res.zaloLink, '_blank')
-                toast.success('Đặt lịch thành công! Vui lòng xác nhận qua Zalo.')
-            } else if (res.confirmChannel === 'email' && res.emailSent === false) {
-                // Lịch đã lưu thành công nhưng KHÔNG gửi được mail -> phải báo rõ cho khách,
-                // tránh việc khách ngồi chờ mail mà không biết là mail đã lỗi.
-                toast.warn('Đặt lịch thành công nhưng CHƯA gửi được email xác nhận. '
-                    + 'Vui lòng liên hệ hotline để được hỗ trợ.')
+            if (res && res.errCode === 0) {
+                // Nếu chọn Zalo, mở link Zalo để khách nhận tin xác nhận
+                if (res.confirmChannel === 'zalo' && res.zaloLink) {
+                    window.open(res.zaloLink, '_blank')
+                    toast.success('Đặt lịch thành công! Vui lòng xác nhận qua Zalo.')
+                } else if (res.confirmChannel === 'email' && res.emailPending) {
+                    // Lịch đã lưu, mail đang gửi nền — không bắt khách chờ SMTP.
+                    toast.success('Đặt lịch thành công! Email xác nhận đang được gửi, vui lòng kiểm tra hộp thư.')
+                } else if (res.confirmChannel === 'email' && res.emailSent === false) {
+                    // Lịch đã lưu thành công nhưng KHÔNG gửi được mail -> phải báo rõ cho khách,
+                    // tránh việc khách ngồi chờ mail mà không biết là mail đã lỗi.
+                    toast.warn('Đặt lịch thành công nhưng CHƯA gửi được email xác nhận. '
+                        + 'Vui lòng liên hệ hotline để được hỗ trợ.')
+                } else {
+                    toast.success('Đặt lịch thành công! Vui lòng kiểm tra email để xác nhận.')
+                }
+
+                this.props.closeBookingModal()
             } else {
-                toast.success('Đặt lịch thành công! Vui lòng kiểm tra email để xác nhận.')
+                toast.error(res && res.errMessage ? res.errMessage : 'Booking a new appointment error!')
             }
-
-            this.props.closeBookingModal()
-        }
-        else {
+        } catch (e) {
+            // Trước đây không có catch: nếu API lỗi/timeout thì overlay Loading treo vĩnh viễn.
+            toast.error('Không kết nối được máy chủ đặt lịch. Vui lòng kiểm tra mạng và thử lại.')
+        } finally {
             this.setState({
                 isShowLoading: false
             })
-            toast.error(res.errMessage ?? 'Booking a new appointment error!')
         }
     }
 

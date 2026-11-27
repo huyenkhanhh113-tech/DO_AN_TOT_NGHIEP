@@ -30,12 +30,14 @@ require('dotenv').config()
  *     `users`     — SELECT theo email; nếu chưa có thì INSERT tài khoản bệnh nhân
  *                   mới với `roleId = 'R3'`.
  * - Trả về: `{ errCode, errMessage, confirmChannel, zaloLink, confirmMessage,
- *             emailSent, emailError }`
+ *             emailSent, emailPending, emailError }`
  *     0 = đặt thành công; 1 = thiếu tham số; 2 = khung giờ đã đầy;
  *     3 = email này đã có lịch trong ngày; 4 = khung giờ không tồn tại.
  *
  * Trạng thái sau khi đặt: `statusId = 'S1'` (chờ khách xác nhận qua link trong mail).
- * Lỗi gửi xác nhận KHÔNG làm hỏng việc đặt lịch — dữ liệu đã lưu DB trước đó.
+ * Với kênh email, mail được gửi NỀN (`emailPending: true`) để không chặn phản hồi:
+ * Gmail có thể timeout 20–50 giây khi mạng/proxy chặn SMTP, nếu chờ sẽ làm frontend
+ * treo "Loading..." dù lịch đã lưu thành công.
  * Nếu không tìm thấy khung giờ thì phải trả lỗi NGAY, không được tạo booking rồi
  * mới văng exception ở bước tăng `currentNumber` (lỗi này từng tạo bản ghi "ma"
  * khiến khách không đặt lại được lần sau).
@@ -146,7 +148,7 @@ let postBookAppointmentService = (data) => {
 
                     // Chỉ gửi xác nhận cho lần đặt mới (token khớp), tránh gửi trùng.
                     if (bookingObj[0].token === token) {
-                        let confirmResult = await sendConfirmation(confirmChannel, {
+                        let confirmationPayload = {
                             receiverEmail: data.email,
                             patientName: data.fullName,
                             time: data.timeString,
@@ -154,18 +156,47 @@ let postBookAppointmentService = (data) => {
                             language: data.language,
                             redirectLink: buildUrlEmail(data.doctorId, token),
                             contactPhone: contactPhone
-                        })
+                        }
+
+                        // Zalo: cần link để frontend mở ngay -> chờ (thao tác nhanh, không SMTP).
+                        if (confirmChannel === 'zalo') {
+                            let confirmResult = await sendConfirmation('zalo', confirmationPayload)
+                            resolve({
+                                errCode: 0,
+                                errMessage: 'Save book appointment succeed!',
+                                confirmChannel: confirmChannel,
+                                zaloLink: confirmResult && confirmResult.zaloLink ? confirmResult.zaloLink : '',
+                                confirmMessage: confirmResult && confirmResult.message ? confirmResult.message : '',
+                                emailSent: false,
+                                emailError: ''
+                            })
+                            return
+                        }
+
+                        // Email: KHÔNG chờ SMTP. Gmail có thể timeout 20–50s (mạng/proxy),
+                        // nếu chờ sẽ làm frontend treo "Loading..." dù lịch đã lưu.
+                        // Gửi nền, trả kết quả đặt lịch ngay; lỗi mail chỉ ghi log.
+                        sendConfirmation('email', confirmationPayload)
+                            .then((result) => {
+                                if (!result || result.emailSent !== true) {
+                                    console.log('>>> GUI MAIL XAC NHAN THAT BAI (nền):',
+                                        result && result.emailError ? result.emailError : 'unknown')
+                                }
+                            })
+                            .catch((mailError) => {
+                                console.log('>>> GUI MAIL XAC NHAN THAT BAI (nền):',
+                                    mailError.code || '', '-', mailError.message)
+                            })
 
                         resolve({
                             errCode: 0,
                             errMessage: 'Save book appointment succeed!',
-                            confirmChannel: confirmChannel,
-                            // Link Zalo để frontend mở ngay (chỉ có khi chọn kênh Zalo)
-                            zaloLink: confirmResult && confirmResult.zaloLink ? confirmResult.zaloLink : '',
-                            confirmMessage: confirmResult && confirmResult.message ? confirmResult.message : '',
-                            // Trạng thái gửi mail (để UI cảnh báo nếu gửi thất bại)
-                            emailSent: confirmResult && confirmResult.emailSent === true,
-                            emailError: confirmResult && confirmResult.emailError ? confirmResult.emailError : ''
+                            confirmChannel: 'email',
+                            zaloLink: '',
+                            confirmMessage: '',
+                            emailSent: null,
+                            emailPending: true,
+                            emailError: ''
                         })
                         return
                     }

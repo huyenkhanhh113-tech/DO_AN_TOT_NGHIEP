@@ -175,7 +175,9 @@ const getProfileDoctorByIdService = (doctorId) => {
  *         đã bóc sẵn `response.data`, nên nơi gọi nhận trực tiếp object JSON).
  */
 const postPatientBookingService = (data) => {
-    return axios.post('/api/patient-book-appointment', data)
+    // Timeout 30s: tránh treo vô hạn nếu backend/mạng không phản hồi.
+    // Backend đã trả kết quả trước khi gửi mail, nên bình thường chỉ ~1s.
+    return axios.post('/api/patient-book-appointment', data, { timeout: 30000 })
 } 
 
 /**
